@@ -12,6 +12,7 @@ namespace Dialogue
         [SerializeField] private Image portrait;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text descriptionText;
+        [SerializeField] private AudioSource audioSource;
         
         #region Animation Events
 
