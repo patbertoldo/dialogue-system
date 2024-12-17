@@ -8,5 +8,7 @@ namespace Dialogue
     {
         [SerializeField] private DialogueContainer dialogueContainerLeft;
         [SerializeField] private DialogueContainer dialogueContainerRight;
+        
+
     }
 }

@@ -12,5 +12,29 @@ namespace Dialogue
         [SerializeField] private Image portrait;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text descriptionText;
+        
+        #region Animation Events
+
+        public void FlyInComplete()
+        {
+            
+        }
+        
+        public void FlyOutComplete()
+        {
+            
+        }
+        
+        public void FocusComplete()
+        {
+            
+        }
+        
+        public void UnfocusComplete()
+        {
+            
+        }
+        
+        #endregion Animation Events
     }
 }
