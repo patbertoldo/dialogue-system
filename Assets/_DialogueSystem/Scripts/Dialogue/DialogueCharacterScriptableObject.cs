@@ -13,7 +13,7 @@ namespace Dialogue
         THINKING
     }
     
-    [CreateAssetMenu(fileName = "NewDialogueCharacter", menuName = "DialogueSystem/DialogueCharacter", order = 1)]
+    [CreateAssetMenu(fileName = "NewDialogueCharacter", menuName = "Dialogue System/DialogueCharacter", order = 1)]
     public class DialogueCharacterScriptableObject : ScriptableObject
     {
         [SerializeField] private string name;
