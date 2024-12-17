@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108a43f00b408a148a1f110ca2dfb99a, type: 3}
+  m_Name: Lisa
+  m_EditorClassIdentifier: 
+  name: Lisa
+  portraits:
+  - {fileID: 21300000, guid: 0ee52530b4ca8b743a8672838a63f70d, type: 3}
+  - {fileID: 21300000, guid: 75620e7d587d6054f901f43469b0c119, type: 3}
+  - {fileID: 21300000, guid: d3e0d06965defbc49807cd72bac68cde, type: 3}
+  - {fileID: 21300000, guid: af53c3f4058abb743b9d67228914b873, type: 3}
+  - {fileID: 21300000, guid: a450f4333bbcb964ea5fb18b2c25662f, type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: 1f348b0dd1a11ea44ad0dbf500631d3e, type: 3}
+  - {fileID: 8300000, guid: e00f50400d3bad546a6f09f200dfc9bc, type: 3}
+  - {fileID: 8300000, guid: c67f147a670defa4bbc192085fa14ffb, type: 3}
+  - {fileID: 8300000, guid: a6255ece17922c149b2bb512326190e3, type: 3}
+  - {fileID: 8300000, guid: f0001702aafc59941bf55b530ffa7e73, type: 3}

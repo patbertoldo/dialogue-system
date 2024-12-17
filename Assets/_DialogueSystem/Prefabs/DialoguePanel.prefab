@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueContainerLeft: {fileID: 6672356156451622190}
-  dialogueContainerRight: {fileID: 0}
+  dialogueContainerRight: {fileID: 4690827715736592665}
 --- !u!1001 &4699082170264781625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -255,3 +255,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6498364196797812742, guid: c6ee9ee7e97e87640be7082ad7ed572a, type: 3}
   m_PrefabInstance: {fileID: 7744770835858274967}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4690827715736592665 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3054530158970690446, guid: c6ee9ee7e97e87640be7082ad7ed572a, type: 3}
+  m_PrefabInstance: {fileID: 7744770835858274967}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c8d5c4b835cb84f89af5caa4952e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
