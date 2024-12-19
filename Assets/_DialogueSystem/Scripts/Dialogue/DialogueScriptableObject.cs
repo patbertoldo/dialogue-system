@@ -8,5 +8,7 @@ namespace Dialogue
     public class DialogueScriptableObject : ScriptableObject
     {
         [SerializeField] private DialogueBlock[] dialogueBlocks;
+
+        public DialogueBlock[] DialogueBlocks => dialogueBlocks;
     }
 }

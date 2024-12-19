@@ -13,6 +13,17 @@ namespace Dialogue
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private AudioSource audioSource;
+
+        public void Initialise(DialogueBlock dialogueBlock)
+        {
+            portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(dialogueBlock.Emotion);
+
+            nameText.text = dialogueBlock.DialogueCharacter.Name;
+            descriptionText.text = dialogueBlock.Description;
+
+            audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(dialogueBlock.Emotion);
+            audioSource.Play();
+        }
         
         #region Animation Events
 

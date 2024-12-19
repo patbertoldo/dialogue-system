@@ -24,4 +24,4 @@ MonoBehaviour:
   - alignment: 0
     emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Let's see if it's up to scratch!
+    description: Let's see if it's... up to scratch!

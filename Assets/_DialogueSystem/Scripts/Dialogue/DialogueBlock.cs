@@ -17,6 +17,12 @@ namespace Dialogue
         [SerializeField] private DialogueAlignment alignment;
         [SerializeField] private Emotions emotion;
         [SerializeField] private DialogueCharacterScriptableObject dialogueCharacter;
+        [TextArea(3, 10)]
         [SerializeField] private string description;
+        
+        public DialogueAlignment Alignment => alignment;
+        public Emotions Emotion => emotion;
+        public DialogueCharacterScriptableObject DialogueCharacter => dialogueCharacter;
+        public string Description => description;
     }
 }

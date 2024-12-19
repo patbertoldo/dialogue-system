@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0432eb392c5685143adef1402d10fd85
+  m_SerializeEntries:
+  - m_GUID: 4da51fe1357d4f348a04c2092a92476f
+    m_Address: Assets/_DialogueSystem/DialogueCharacters/Henry.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 732633cda027468488b8f777e678e979
+    m_Address: Assets/_DialogueSystem/DialogueCharacters/Patrick.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af8ec95ad12565a43a2d2093a0df8efc
+    m_Address: Assets/_DialogueSystem/DialogueCharacters/Lisa.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc391651abf3f054794bc7df1def0df8
+    m_Address: Assets/_DialogueSystem/DialogueExamples/1_DialogueWithPatrick.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 87e23100c0548be4886b622637008b1e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 123771c888b9b0941a2f9d8fa07aa4fb, type: 2}
+    - {fileID: 11400000, guid: 40051e802b1152c4298e5b8e003e02c6, type: 2}
