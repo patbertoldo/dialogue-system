@@ -30,7 +30,6 @@ namespace Dialogue
         
         // States
         private DialogueScriptableObject currentDialogue;
-        private UniTask animateTextTask;
         private DialogueState currentState;
         private int currentIndex;
         
@@ -181,14 +180,9 @@ namespace Dialogue
         
         #region Data Handling
 
-        private void DialogueScriptableObjectAsyncCompleted(
-            AsyncOperationHandle<DialogueScriptableObject> asyncOperationHandle)
-        {
-            
-        }
-
         private void ResetDialogue()
         {
+            currentDialogueHandle.Release();
             currentDialogue = null;
             currentState = DialogueState.NONE;
             currentIndex = 0;
