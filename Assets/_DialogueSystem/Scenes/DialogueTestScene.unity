@@ -523,6 +523,10 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  - m_AssetGUID: c36238d27d075ae489d150b0795b8385
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!4 &1836323450
 Transform:
   m_ObjectHideFlags: 0

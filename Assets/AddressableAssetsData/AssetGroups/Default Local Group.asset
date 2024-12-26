@@ -47,6 +47,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c36238d27d075ae489d150b0795b8385
+    m_Address: Assets/_DialogueSystem/DialogueExamples/4_Colours.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 87e23100c0548be4886b622637008b1e, type: 2}
   m_SchemaSet:
