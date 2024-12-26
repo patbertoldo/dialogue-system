@@ -52,6 +52,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea052b5dc1e7f3c46ac21f815d7a246a
+    m_Address: Assets/_DialogueSystem/DialogueExamples/5_ShowAndHide.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 87e23100c0548be4886b622637008b1e, type: 2}
   m_SchemaSet:

@@ -21,11 +21,19 @@ namespace Dialogue
         private const float fadeIn = 1f;
         private const float fadeOut = 0.75f;
         private const float fadeTime = 0.25f;
+        private const float shakeTime = 1f;
+
+        /// <summary>
+        /// Hidden stops effects from happening to the container, as it is a custom markup setting <hide>.
+        /// Use <show> to reset the flag.
+        /// </summary>
+        private bool hidden = false;
 
         public void Initialise(DialogueBlock dialogueBlock)
         {
             canvasGroup.alpha = 0;
-
+            hidden = false;
+            
             if (dialogueBlock == null)
                 return;
             
@@ -44,19 +52,40 @@ namespace Dialogue
             nameText.text = dialogueBlock.DialogueCharacter.Name;
 
             audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(dialogueBlock.Emotion);
-            audioSource.Play();
             
-            canvasGroup.DOFade(fadeIn, fadeTime);
+            if (!hidden)
+                ShowEffect();
         }
 
         public void PlayUnfocus()
         {
-            canvasGroup.DOFade(fadeOut, fadeTime);
+            if (!hidden)
+                canvasGroup.DOFade(fadeOut, fadeTime);
         }
 
         public void SetText(string text)
         {
             descriptionText.text = text;
+        }
+
+        public void ShowEffect()
+        {
+            hidden = false;
+            
+            audioSource.Play();
+            canvasGroup.DOFade(fadeIn, fadeTime);
+        }
+
+        public void HideEffect()
+        {
+            hidden = true;
+            
+            canvasGroup.DOFade(0, fadeTime);
+        }
+
+        public void ShakeEffect()
+        {
+            transform.DOShakePosition(shakeTime);
         }
     }
 }
