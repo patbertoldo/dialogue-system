@@ -33,7 +33,8 @@ namespace Dialogue
 
         private void OnDestroy()
         {
-            dialogueManager.CleanUp();
+            // Loses reference before it can clean up.
+            //dialogueManager.CleanUp();
         }
 
         #region Actions

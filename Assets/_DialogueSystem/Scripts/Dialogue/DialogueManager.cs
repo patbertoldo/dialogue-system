@@ -17,8 +17,9 @@ namespace Dialogue
     /// </summary>
     public enum DialogueState
     {
-        NONE,
-        IN_PROGRESS,    // When text is in an animating state.
+        NONE,           // When text and tasks are started.
+        PLAY,           // When text is in an animating state.
+        SKIPPED,        // When in player input force finishes the text animation.
         FINISHED        // When text has finished animating.
     }
     
@@ -69,54 +70,94 @@ namespace Dialogue
             currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
             currentDialogue = await currentDialogueHandle;
             
-            currentState = DialogueState.IN_PROGRESS;
+            // Get the first dialogue for the left side of the conversation and the right.
+            // For dialogues that only have one side, pass null for the other side.
+            DialogueBlock dialogueBlockLeft = currentDialogue.GetFirstInstanceOfAlignment(DialogueAlignment.LEFT);
+            DialogueBlock dialogueBlockRight = currentDialogue.GetFirstInstanceOfAlignment(DialogueAlignment.RIGHT);
             
-            dialoguePanel.InitialiseDialogue(currentDialogue.DialogueBlocks[currentIndex]);
+            dialoguePanel.InitialiseDialogue(dialogueBlockLeft, dialogueBlockRight);
 
-            await AnimateText(currentDialogue.DialogueBlocks[currentIndex].Description, animationCancellation.Token).SuppressCancellationThrow();
+            var task = UniTask.Delay(100, cancellationToken: animationCancellation.Token).SuppressCancellationThrow().GetAwaiter();
+            
+            task.OnCompleted(PlayDialogue);
         }
 
-        private async void ContinueDialogue()
+        /// <summary>
+        /// UI event.
+        /// </summary>
+        private void ContinueDialogue()
         {
-            // Continue if the current index is finished.
-            if (currentState == DialogueState.FINISHED)
+            switch (currentState)
             {
-                // Start the next dialogue if there is another index.
-                if (currentIndex < currentDialogue.DialogueBlocks.Length - 1)
+                case DialogueState.PLAY:
                 {
-                    currentState = DialogueState.IN_PROGRESS;
-                    currentIndex++;
-            
-                    dialoguePanel.InitialiseDialogue(currentDialogue.DialogueBlocks[currentIndex]);
-                    await AnimateText(currentDialogue.DialogueBlocks[currentIndex].Description, animationCancellation.Token).SuppressCancellationThrow();
+                    animationCancellation.Cancel();
+                    break;
                 }
-                // Finished.
-                else
+                case DialogueState.SKIPPED:              
+                case DialogueState.FINISHED:
                 {
-                    CloseDialogue();
+                    FinishDialogue();
+                    break;
                 }
             }
-            // Skip progress and finish current dialogue.
-            else
+        }
+
+        private async void PlayDialogue()
+        {
+            currentState = DialogueState.PLAY;
+            
+            // I want to allow tasks to be cancelled, but once they are I don't think I can recycle
+            // the source, so each new play creates a new source.
+            animationCancellation = new CancellationTokenSource();
+                    
+            var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
+            dialoguePanel.NextDialogue(dialogueBlock);
+
+            try
             {
-                animationCancellation.Cancel();
-                
-                dialoguePanel.SetDialogueText(currentDialogue.DialogueBlocks[currentIndex].Description);
+                await AnimateText(dialogueBlock.Description, animationCancellation.Token);
                 
                 currentState = DialogueState.FINISHED;
+            }
+            catch (Exception e)
+            {
+                SkipDialogue();
+            }
+        }
+
+        private void SkipDialogue()
+        {
+            currentState = DialogueState.SKIPPED;
+            
+                    
+            var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
+
+            dialoguePanel.SetDialogueText(dialogueBlock.Description);
+        }
+
+        private void FinishDialogue()
+        {
+            currentState = DialogueState.FINISHED;
+            
+            currentIndex++;
+
+            if (currentIndex >= currentDialogue.DialogueBlocks.Length)
+            {
+                CloseDialogue();
+            }
+            else
+            {
+                PlayDialogue();
             }
         }
 
         private void CloseDialogue()
         {
             dialoguePanel.Hide();
-            
-            
 
             ResetDialogue();
         }
-        
-        
         
         #endregion Dialogue Handling
         
@@ -128,24 +169,13 @@ namespace Dialogue
             
             foreach (var character in text.ToCharArray())
             {
-                //cancellationToken.ThrowIfCancellationRequested();
-                if (cancellationToken.IsCancellationRequested)
-                    return;
-                // // If player skips, break early.
-                // if (currentState == DialogueState.FINISHED)
-                // {
-                //     dialoguePanel.SetDialogueText(text);
-                //
-                //     return;
-                // }
+                cancellationToken.ThrowIfCancellationRequested();
                 
-                await UniTask.Delay(20, cancellationToken: cancellationToken).SuppressCancellationThrow();
+                await UniTask.Delay(20, cancellationToken: cancellationToken);
 
                 stringBuilder.Append(character);
                 dialoguePanel.SetDialogueText(stringBuilder.ToString());
             }
-            
-            currentState = DialogueState.FINISHED;
         }
         #endregion Task Handling
         
@@ -162,6 +192,9 @@ namespace Dialogue
             currentDialogue = null;
             currentState = DialogueState.NONE;
             currentIndex = 0;
+            
+            animationCancellation.Dispose();
+            animationCancellation = null;
         }
         
         #endregion

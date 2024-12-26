@@ -11,5 +11,18 @@ namespace Dialogue
         [SerializeField] private DialogueBlock[] dialogueBlocks;
 
         public DialogueBlock[] DialogueBlocks => dialogueBlocks;
+
+        public DialogueBlock GetFirstInstanceOfAlignment(DialogueAlignment alignment)
+        {
+            foreach (var dialogueBlock in dialogueBlocks)
+            {
+                if (dialogueBlock.Alignment == alignment)
+                {
+                    return dialogueBlock;
+                }
+            }
+
+            return null;
+        }
     }
 }

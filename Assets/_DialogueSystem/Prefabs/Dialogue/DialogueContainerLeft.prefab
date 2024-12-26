@@ -472,6 +472,7 @@ MonoBehaviour:
   nameText: {fileID: 140929083746386947}
   descriptionText: {fileID: 2544154365446718660}
   audioSource: {fileID: -7429185516449860588}
+  animator: {fileID: 345130065199143382}
 --- !u!95 &345130065199143382
 Animator:
   serializedVersion: 5

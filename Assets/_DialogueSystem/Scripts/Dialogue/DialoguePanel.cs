@@ -19,6 +19,7 @@ namespace Dialogue
         private Action onContinue;
         
         DialogueContainer currentDialogueContainer;
+        DialogueContainer previousDialogueContainer;
 
         public void SetContinueEvent(Action onContinue)
         {
@@ -26,16 +27,32 @@ namespace Dialogue
             continueButton.onClick.AddListener(() => this.onContinue.Invoke());
         }
         
-        public void InitialiseDialogue(DialogueBlock dialogueBlock)
+        public void InitialiseDialogue(DialogueBlock dialogueBlockLeft, DialogueBlock dialogueBlockRight)
         {
             Show();
-            
-            currentDialogueContainer =
-                dialogueBlock.Alignment == DialogueAlignment.LEFT ?
-                dialogueContainerLeft :
-                dialogueContainerRight;
 
-            currentDialogueContainer.Initialise(dialogueBlock);
+            dialogueContainerLeft.Initialise(dialogueBlockLeft);
+            dialogueContainerRight.Initialise(dialogueBlockRight);
+        }
+
+        public void NextDialogue(DialogueBlock dialogueBlock)
+        {
+            currentDialogueContainer = dialogueBlock.Alignment == DialogueAlignment.LEFT
+                ? dialogueContainerLeft
+                : dialogueContainerRight;
+            
+            currentDialogueContainer.PlayFocus(dialogueBlock);
+
+            // Unfocus the previous dialogue if needed.
+            if (previousDialogueContainer != null)
+            {
+                if (previousDialogueContainer != currentDialogueContainer)
+                {
+                    previousDialogueContainer.PlayUnfocus();
+                }
+            }
+            
+            previousDialogueContainer = currentDialogueContainer;
         }
 
         public void SetDialogueText(string text)
