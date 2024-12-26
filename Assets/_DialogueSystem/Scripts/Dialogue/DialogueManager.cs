@@ -159,10 +159,29 @@ namespace Dialogue
         private async UniTask AnimateText(string text, int textSpeed, CancellationToken cancellationToken)
         {
             stringBuilder.Clear();
+
+            bool encounteredMarkup = false;
             
             foreach (var character in text.ToCharArray())
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
+                if (encounteredMarkup)
+                {
+                    if (character == '>')
+                    {
+                        encounteredMarkup = false;
+                    }
+                    stringBuilder.Append(character);
+                    continue;
+                }
+
+                if (character == '<')
+                {
+                    encounteredMarkup = true;
+                    stringBuilder.Append(character);
+                    continue;
+                }
                 
                 await UniTask.Delay(textSpeed, cancellationToken: cancellationToken);
 
