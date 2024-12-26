@@ -207,8 +207,8 @@ namespace Dialogue
                         else if (markupStripped == markupWait)
                         {
                             animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-
-                            await UniTask.Delay(GetMarkupValue(markup), cancellationToken: animationCancellation.Token);
+                            int milliSeconds = GetMarkupValue(markup) * 1000;
+                            await UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token);
                         }
                         else if (markupStripped == markupSpeed)
                         {
@@ -216,6 +216,8 @@ namespace Dialogue
 
                             textSpeed = GetMarkupValue(markup);
                         }
+
+                        markupBuilder.Clear();
                     }
                     continue;
                 }
@@ -254,7 +256,10 @@ namespace Dialogue
 
         private int GetMarkupValue(string markup)
         {
-            return int.Parse(markup.Substring(markup.IndexOf('=') + 1, markup.Length - 1));
+            int indexAfterEquals = markup.IndexOf('=') + 1;
+            int length = markup.Length - 1 - indexAfterEquals;  
+            var result = markup.Substring(indexAfterEquals, length);
+            return int.Parse(result);
         }
 
         private async UniTask CustomMarkup(string text)

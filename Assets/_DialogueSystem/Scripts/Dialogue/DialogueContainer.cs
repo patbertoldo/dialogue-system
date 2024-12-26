@@ -21,6 +21,9 @@ namespace Dialogue
         private const float fadeIn = 1f;
         private const float fadeOut = 0.75f;
         private const float fadeTime = 0.25f;
+
+        private const float shakeStrength = 20f;
+        private const int shakeVibrato = 100;
         private const float shakeTime = 1f;
 
         /// <summary>
@@ -85,7 +88,7 @@ namespace Dialogue
 
         public void ShakeEffect()
         {
-            transform.DOShakePosition(shakeTime);
+            transform.DOShakePosition(shakeTime, shakeStrength, shakeVibrato);
         }
     }
 }
