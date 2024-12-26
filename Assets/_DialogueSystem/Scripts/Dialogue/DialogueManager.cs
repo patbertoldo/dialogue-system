@@ -37,8 +37,14 @@ namespace Dialogue
         private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
         
         private CancellationTokenSource animationCancellation;
-        private StringBuilder stringBuilder;
-
+        private StringBuilder animatingBuilder;
+        
+        // Custom Markup
+        private const string markupWait = "wait";
+        private const string markupSpeed = "speed";
+        private const string markupShake = "shake";
+        private const string markupShow = "show";
+        private const string markupHide = "hide";
         
         public DialogueManager(DialoguePanel dialoguePanel)
         {
@@ -49,7 +55,7 @@ namespace Dialogue
             currentIndex = 0;
             
             animationCancellation = new CancellationTokenSource();
-            stringBuilder = new StringBuilder();
+            animatingBuilder = new StringBuilder();
             
             dialoguePanel.SetContinueEvent(ContinueDialogue);
         }
@@ -126,7 +132,7 @@ namespace Dialogue
                     
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
 
-            dialoguePanel.SetDialogueText(dialogueBlock.Description);
+            dialoguePanel.SetDialogueTextOnActiveDialogue(dialogueBlock.Description);
         }
 
         private void FinishDialogue()
@@ -158,7 +164,8 @@ namespace Dialogue
         
         private async UniTask AnimateText(string text, int textSpeed, CancellationToken cancellationToken)
         {
-            stringBuilder.Clear();
+            animatingBuilder.Clear();
+            StringBuilder markupBuilder = new StringBuilder();
 
             bool encounteredMarkup = false;
             
@@ -168,27 +175,95 @@ namespace Dialogue
 
                 if (encounteredMarkup)
                 {
+                    animatingBuilder.Append(character);
+                    markupBuilder.Append(character);
+
                     if (character == '>')
                     {
                         encounteredMarkup = false;
+
+                        var markup = markupBuilder.ToString();
+                        var markupStripped = GetMarkupStripped(markup);
+                        
+                        // If true, strip our custom tags from the animatingBuilder as TMP only hides its own tags.
+                        if (markupStripped == markupShow)
+                        {
+                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+
+                            dialoguePanel.ShowEffectOnActiveDialogue();
+                        }
+                        else if (markupStripped == markupHide)
+                        {
+                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+
+                            dialoguePanel.HideEffectOnActiveDialogue();
+                        }
+                        else if (markupStripped == markupShake)
+                        {
+                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+
+                            dialoguePanel.ShakeEffectOnActiveDialogue();
+                        }
+                        else if (markupStripped == markupWait)
+                        {
+                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+
+                            await UniTask.Delay(GetMarkupValue(markup), cancellationToken: animationCancellation.Token);
+                        }
+                        else if (markupStripped == markupSpeed)
+                        {
+                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+
+                            textSpeed = GetMarkupValue(markup);
+                        }
                     }
-                    stringBuilder.Append(character);
                     continue;
                 }
 
                 if (character == '<')
                 {
                     encounteredMarkup = true;
-                    stringBuilder.Append(character);
+                    
+                    animatingBuilder.Append(character);
+                    markupBuilder.Append(character);
                     continue;
                 }
                 
                 await UniTask.Delay(textSpeed, cancellationToken: cancellationToken);
 
-                stringBuilder.Append(character);
-                dialoguePanel.SetDialogueText(stringBuilder.ToString());
+                animatingBuilder.Append(character);
+                dialoguePanel.SetDialogueTextOnActiveDialogue(animatingBuilder.ToString());
             }
         }
+
+        private string GetMarkupStripped(string markup)
+        {
+            string strippedMarkup = markup;
+
+            if (markup.Contains('='))
+            {
+                strippedMarkup = markup.Substring(1, markup.IndexOf('=') - 1);
+            }
+            else
+            {
+                strippedMarkup = markup.Substring(1, markup.IndexOf('>') - 1);
+            }
+
+            return strippedMarkup;
+        }
+
+        private int GetMarkupValue(string markup)
+        {
+            return int.Parse(markup.Substring(markup.IndexOf('=') + 1, markup.Length - 1));
+        }
+
+        private async UniTask CustomMarkup(string text)
+        {
+            // It would be great to move all the markup if statements out of AnimateText and into here.
+            // I'm not sure how I would return the different values I need for the animate text speed 
+            // and delay.
+        }
+        
         #endregion Task Handling
         
         #region Data Handling

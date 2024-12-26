@@ -471,7 +471,6 @@ MonoBehaviour:
   nameText: {fileID: 140929083746386947}
   descriptionText: {fileID: 2544154365446718660}
   audioSource: {fileID: -7429185516449860588}
-  animator: {fileID: 0}
 --- !u!82 &-7429185516449860588
 AudioSource:
   m_ObjectHideFlags: 0
@@ -483,7 +482,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
