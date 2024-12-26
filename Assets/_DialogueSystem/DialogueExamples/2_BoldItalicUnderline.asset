@@ -17,15 +17,19 @@ MonoBehaviour:
     emotion: 0
     dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     description: Hey Patrick!
+    textSpeed: 20
   - alignment: 0
     emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     description: Hey Henry! Can you speak in <i>italics?</i>
+    textSpeed: 20
   - alignment: 1
     emotion: 1
     dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     description: No, but I can speak in <b>bold</b>.
+    textSpeed: 20
   - alignment: 0
     emotion: 0
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     description: <u>Touche!</u>
+    textSpeed: 20

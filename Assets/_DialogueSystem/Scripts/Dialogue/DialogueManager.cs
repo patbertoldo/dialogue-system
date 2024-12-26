@@ -54,12 +54,6 @@ namespace Dialogue
             dialoguePanel.SetContinueEvent(ContinueDialogue);
         }
 
-        public void CleanUp()
-        {
-            //animationCancellation.Cancel();
-            animationCancellation.Dispose();
-        }
-
         #region Dialogue Handling
         
         public async void OpenDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
@@ -115,7 +109,7 @@ namespace Dialogue
 
             try
             {
-                await AnimateText(dialogueBlock.Description, animationCancellation.Token);
+                await AnimateText(dialogueBlock.Description, dialogueBlock.TextSpeed, animationCancellation.Token);
                 
                 currentState = DialogueState.FINISHED;
             }
@@ -162,7 +156,7 @@ namespace Dialogue
         
         #region Task Handling
         
-        private async UniTask AnimateText(string text, CancellationToken cancellationToken)
+        private async UniTask AnimateText(string text, int textSpeed, CancellationToken cancellationToken)
         {
             stringBuilder.Clear();
             
@@ -170,7 +164,7 @@ namespace Dialogue
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 
-                await UniTask.Delay(20, cancellationToken: cancellationToken);
+                await UniTask.Delay(textSpeed, cancellationToken: cancellationToken);
 
                 stringBuilder.Append(character);
                 dialoguePanel.SetDialogueText(stringBuilder.ToString());

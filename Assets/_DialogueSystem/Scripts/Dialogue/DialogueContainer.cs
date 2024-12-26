@@ -20,7 +20,7 @@ namespace Dialogue
         // Tweening
         private const float fadeIn = 1f;
         private const float fadeOut = 0.75f;
-        private const float fadeTime = 0.5f;
+        private const float fadeTime = 0.25f;
 
         public void Initialise(DialogueBlock dialogueBlock)
         {
@@ -33,8 +33,8 @@ namespace Dialogue
 
             nameText.text = dialogueBlock.DialogueCharacter.Name;
             descriptionText.text = "";
-            
-            canvasGroup.DOFade(fadeIn, fadeTime);
+
+            canvasGroup.alpha = fadeOut;
         }
 
         public void PlayFocus(DialogueBlock dialogueBlock)
