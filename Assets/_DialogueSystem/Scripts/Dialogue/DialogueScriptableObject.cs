@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Dialogue
 {
@@ -8,5 +9,20 @@ namespace Dialogue
     public class DialogueScriptableObject : ScriptableObject
     {
         [SerializeField] private DialogueBlock[] dialogueBlocks;
+
+        public DialogueBlock[] DialogueBlocks => dialogueBlocks;
+
+        public DialogueBlock GetFirstInstanceOfAlignment(DialogueAlignment alignment)
+        {
+            foreach (var dialogueBlock in dialogueBlocks)
+            {
+                if (dialogueBlock.Alignment == alignment)
+                {
+                    return dialogueBlock;
+                }
+            }
+
+            return null;
+        }
     }
 }

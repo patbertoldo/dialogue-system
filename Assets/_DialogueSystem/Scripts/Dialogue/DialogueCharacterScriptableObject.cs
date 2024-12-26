@@ -16,7 +16,7 @@ namespace Dialogue
     [CreateAssetMenu(fileName = "NewDialogueCharacter", menuName = "Dialogue System/DialogueCharacter", order = 1)]
     public class DialogueCharacterScriptableObject : ScriptableObject
     {
-        [SerializeField] private string name;
+        [SerializeField] private new string name;
         [Tooltip("Portraits should be ordered according to emotions.")]
         [SerializeField] private Sprite[] portraits;
         [Tooltip("Sounds should be ordered according to emotions.")]
