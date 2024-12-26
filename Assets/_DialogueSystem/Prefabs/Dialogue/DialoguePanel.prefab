@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1302844254581187761}
   - component: {fileID: 7975946278371721906}
   - component: {fileID: 783133543879352265}
+  - component: {fileID: 5225306287353610834}
   m_Layer: 5
   m_Name: DialoguePanel
   m_TagString: Untagged
@@ -91,9 +92,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4c0ffd478ce594095d2932d17b5525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 5225306287353610834}
   dialogueContainerLeft: {fileID: 6672356156451622190}
   dialogueContainerRight: {fileID: 4690827715736592665}
   continueButton: {fileID: 3852757153545319752}
+--- !u!225 &5225306287353610834
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112335717871800055}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4246658003520707950
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +238,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 345130065199143382, guid: 435a0e177d418db49983cf006ee44151, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4283658703456934882, guid: 435a0e177d418db49983cf006ee44151, type: 3}
       propertyPath: m_Name
@@ -345,7 +359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3677045940488457295, guid: c6ee9ee7e97e87640be7082ad7ed572a, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6498364196797812742, guid: c6ee9ee7e97e87640be7082ad7ed572a, type: 3}
       propertyPath: m_LocalPosition.x

@@ -375,7 +375,6 @@ GameObject:
   - component: {fileID: 9146840269666973956}
   - component: {fileID: 4781885939183509500}
   - component: {fileID: 2138795052928962071}
-  - component: {fileID: 345130065199143382}
   - component: {fileID: -7429185516449860588}
   m_Layer: 5
   m_Name: DialogueContainerLeft
@@ -472,28 +471,7 @@ MonoBehaviour:
   nameText: {fileID: 140929083746386947}
   descriptionText: {fileID: 2544154365446718660}
   audioSource: {fileID: -7429185516449860588}
-  animator: {fileID: 345130065199143382}
---- !u!95 &345130065199143382
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4283658703456934882}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca9d520bf29262e4683f96171bb180a3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  animator: {fileID: 0}
 --- !u!82 &-7429185516449860588
 AudioSource:
   m_ObjectHideFlags: 0

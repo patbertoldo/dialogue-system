@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,29 +16,25 @@ namespace Dialogue
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private AudioSource audioSource;
-        [SerializeField] private Animator animator;
         
-        // Animations
-        private const string flyIn = "FlyIn";
-        private const string flyOut = "FlyOut";
-        private const string focus = "Focus";
-        private const string unfocus = "Unfocus";
-        private const string off = "Off";
+        // Tweening
+        private const float fadeIn = 1f;
+        private const float fadeOut = 0.75f;
+        private const float fadeTime = 0.5f;
 
         public void Initialise(DialogueBlock dialogueBlock)
         {
+            canvasGroup.alpha = 0;
+
             if (dialogueBlock == null)
-            {
-                animator.SetTrigger(off);
                 return;
-            }
             
             portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(dialogueBlock.Emotion);
 
             nameText.text = dialogueBlock.DialogueCharacter.Name;
             descriptionText.text = "";
             
-            animator.SetTrigger(flyIn);
+            canvasGroup.DOFade(fadeIn, fadeTime);
         }
 
         public void PlayFocus(DialogueBlock dialogueBlock)
@@ -48,42 +46,17 @@ namespace Dialogue
             audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(dialogueBlock.Emotion);
             audioSource.Play();
             
-            if (canvasGroup.alpha != 1)
-                animator.SetTrigger(focus);
+            canvasGroup.DOFade(fadeIn, fadeTime);
         }
 
         public void PlayUnfocus()
         {
-            animator.SetTrigger(unfocus);
+            canvasGroup.DOFade(fadeOut, fadeTime);
         }
 
         public void SetText(string text)
         {
             descriptionText.text = text;
         }
-        
-        #region Animation Events
-
-        public void FlyInComplete()
-        {
-            
-        }
-        
-        public void FlyOutComplete()
-        {
-            
-        }
-        
-        public void FocusComplete()
-        {
-            
-        }
-        
-        public void UnfocusComplete()
-        {
-            
-        }
-        
-        #endregion Animation Events
     }
 }
