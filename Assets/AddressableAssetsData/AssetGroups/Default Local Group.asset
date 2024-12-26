@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 0432eb392c5685143adef1402d10fd85
   m_SerializeEntries:
+  - m_GUID: 109c5a66b28bf5b41afdd11648455a95
+    m_Address: Assets/_DialogueSystem/DialogueExamples/2_BoldItalicUnderline.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4da51fe1357d4f348a04c2092a92476f
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Henry.asset
     m_ReadOnly: 0
@@ -32,8 +37,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9ade429025d50747b9ca0d5866589be
+    m_Address: Assets/_DialogueSystem/DialogueExamples/3_DialogueWithLisa.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bc391651abf3f054794bc7df1def0df8
-    m_Address: Assets/_DialogueSystem/DialogueExamples/1_DialogueWithPatrick.asset
+    m_Address: Assets/_DialogueSystem/DialogueExamples/1_Intro.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

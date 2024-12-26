@@ -2,20 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Dialogue
 {
     /// <summary>
-    /// The GameManager holds onto references,
+    /// The TestDialogueManager holds onto references,
     /// super simple DI that creates managers and injects their dependencies,
     /// and manages global actions.
     /// </summary>
-    public class GameManager : MonoBehaviour
+    public class TestDialogueManager : MonoBehaviour
     {
         [SerializeField] private TriggerPanel triggerPanel;
         [SerializeField] private DialoguePanel dialoguePanel;
         
-        [SerializeField] private DialogueScriptableObject[] dialogues;
+        [SerializeField] private DialogueScriptableObjectAssetReference[] dialogueAddressables;
         
         private TriggerManager triggerManager;
         private DialogueManager dialogueManager;
@@ -23,18 +24,23 @@ namespace Dialogue
         private void Awake()
         {
             // Managers
-            triggerManager = new TriggerManager(dialogues, triggerPanel);
-            dialogueManager = new DialogueManager(dialogues, dialoguePanel);
+            triggerManager = new TriggerManager(dialogueAddressables, triggerPanel);
+            dialogueManager = new DialogueManager(dialoguePanel);
             
             // Actions
             triggerManager.ShowTriggers(OnTriggerDialogueByName);
         }
 
+        private void OnDestroy()
+        {
+            dialogueManager.CleanUp();
+        }
+
         #region Actions
 
-        private void OnTriggerDialogueByName(string dialogueName)
+        public void OnTriggerDialogueByName(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
-            dialogueManager.TriggerDialogue(dialogueName);
+            dialogueManager.OpenDialogue(dialogueAddressable);
         }
         
         #endregion

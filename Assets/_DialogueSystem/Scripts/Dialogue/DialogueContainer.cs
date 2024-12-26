@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,10 +20,15 @@ namespace Dialogue
             portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(dialogueBlock.Emotion);
 
             nameText.text = dialogueBlock.DialogueCharacter.Name;
-            descriptionText.text = dialogueBlock.Description;
+            //descriptionText.text = dialogueBlock.Description;
 
             audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(dialogueBlock.Emotion);
             audioSource.Play();
+        }
+
+        public void SetText(string text)
+        {
+            descriptionText.text = text;
         }
         
         #region Animation Events

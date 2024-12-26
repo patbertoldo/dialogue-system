@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 1836323450}
   - component: {fileID: 1836323449}
   m_Layer: 0
-  m_Name: --GameManager--
+  m_Name: --TestDialogueManager--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,10 +510,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerPanel: {fileID: 1517659346724480121}
   dialoguePanel: {fileID: 8389456210335249314}
-  dialogues:
-  - {fileID: 11400000, guid: bc391651abf3f054794bc7df1def0df8, type: 2}
-  - {fileID: 11400000, guid: 109c5a66b28bf5b41afdd11648455a95, type: 2}
-  - {fileID: 11400000, guid: b9ade429025d50747b9ca0d5866589be, type: 2}
+  dialogueAddressables:
+  - m_AssetGUID: bc391651abf3f054794bc7df1def0df8
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 109c5a66b28bf5b41afdd11648455a95
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: b9ade429025d50747b9ca0d5866589be
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!4 &1836323450
 Transform:
   m_ObjectHideFlags: 0
@@ -624,6 +633,10 @@ PrefabInstance:
     - target: {fileID: 5655955257085418096, guid: ec68a48d45de775418fee3c46f895fd6, type: 3}
       propertyPath: m_Name
       value: TriggerPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655955257085418096, guid: ec68a48d45de775418fee3c46f895fd6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

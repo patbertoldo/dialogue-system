@@ -12,12 +12,14 @@ namespace Dialogue
         [SerializeField] private Transform container;
         [SerializeField] private Button triggerButton;
 
-        public void ShowTriggers(DialogueScriptableObject[] dialogues, Action<string> onClick)
+        public void ShowTriggers(DialogueScriptableObjectAssetReference[] dialogueAssets, Action<DialogueScriptableObjectAssetReference> onClick)
         {
-            foreach (var dialogue in dialogues)
+            Show();
+            
+            foreach (var dialogueAsset in dialogueAssets)
             {
                 var newButton = Instantiate(triggerDialoguePrefab, container);
-                newButton.GetComponent<TriggerButton>().Initiate(dialogue.name, onClick);
+                newButton.GetComponent<TriggerButton>().Initiate(dialogueAsset, onClick);
             }
         }
     }

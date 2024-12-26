@@ -7,18 +7,18 @@ namespace Dialogue
 {
     public class TriggerManager
     {
-        private DialogueScriptableObject[] dialogues;
+        private DialogueScriptableObjectAssetReference[] dialogueAddressables;
         private TriggerPanel triggerPanel;
 
-        public TriggerManager(DialogueScriptableObject[] dialogues, TriggerPanel triggerPanel)
+        public TriggerManager(DialogueScriptableObjectAssetReference[] dialogueAddressables, TriggerPanel triggerPanel)
         {
-            this.dialogues = dialogues;
+            this.dialogueAddressables = dialogueAddressables;
             this.triggerPanel = triggerPanel;
         }
 
-        public void ShowTriggers(Action<string> onClick)
+        public void ShowTriggers(Action<DialogueScriptableObjectAssetReference> onClick)
         {
-            triggerPanel.ShowTriggers(dialogues, onClick);
+            triggerPanel.ShowTriggers(dialogueAddressables, onClick);
         }
     }
 }

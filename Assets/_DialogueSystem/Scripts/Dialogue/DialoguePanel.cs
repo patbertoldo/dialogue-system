@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace Dialogue
 {
@@ -14,22 +18,29 @@ namespace Dialogue
 
         private Action onContinue;
         
+        DialogueContainer currentDialogueContainer;
+
         public void SetContinueEvent(Action onContinue)
         {
             this.onContinue = onContinue;
             continueButton.onClick.AddListener(() => this.onContinue.Invoke());
         }
         
-        public void ShowDialogue(DialogueBlock dialogueBlock)
+        public void InitialiseDialogue(DialogueBlock dialogueBlock)
         {
             Show();
             
-            var currentContainer =
+            currentDialogueContainer =
                 dialogueBlock.Alignment == DialogueAlignment.LEFT ?
                 dialogueContainerLeft :
                 dialogueContainerRight;
 
-            currentContainer.Initialise(dialogueBlock);
+            currentDialogueContainer.Initialise(dialogueBlock);
+        }
+
+        public void SetDialogueText(string text)
+        {
+            currentDialogueContainer.SetText(text);
         }
 
         public void Skip()

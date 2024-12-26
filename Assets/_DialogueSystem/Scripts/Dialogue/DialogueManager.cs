@@ -1,90 +1,160 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Dialogue
 {
+    /// <summary>
+    /// Dialogue State is for each piece of dialogue in a dialogue block, so we know when that dialogue
+    /// is animating a task, or has finished animating and is ready to move on.
+    /// </summary>
     public enum DialogueState
     {
         NONE,
-        IN_PROGRESS,    // When text is in an animating state
+        IN_PROGRESS,    // When text is in an animating state.
         FINISHED        // When text has finished animating.
     }
     
     public class DialogueManager
     {
-        private DialogueScriptableObject[] dialogues;
+        // References
         private DialoguePanel dialoguePanel;
         
+        // States
         private DialogueScriptableObject currentDialogue;
+        private UniTask animateTextTask;
         private DialogueState currentState;
         private int currentIndex;
+        
+        // Tasks
+        private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
+        
+        private CancellationTokenSource animationCancellation;
+        private StringBuilder stringBuilder;
 
-        public DialogueManager(DialogueScriptableObject[] dialogues, DialoguePanel dialoguePanel)
+        
+        public DialogueManager(DialoguePanel dialoguePanel)
         {
-            this.dialogues = dialogues;
             this.dialoguePanel = dialoguePanel;
 
             currentDialogue = null;
             currentState = DialogueState.NONE;
             currentIndex = 0;
             
+            animationCancellation = new CancellationTokenSource();
+            stringBuilder = new StringBuilder();
+            
             dialoguePanel.SetContinueEvent(ContinueDialogue);
         }
 
-        public void TriggerDialogue(string dialogueName)
+        public void CleanUp()
         {
-            Debug.Log($"Trigger: {dialogueName}");
-            
-            currentDialogue = GetDialogueByName(dialogueName);
-            currentState = DialogueState.IN_PROGRESS;
-            
-            dialoguePanel.ShowDialogue(currentDialogue.DialogueBlocks[currentIndex]);
-            
-            // Mock finished state for now.
-            currentState = DialogueState.FINISHED;
+            //animationCancellation.Cancel();
+            animationCancellation.Dispose();
         }
 
-        private void ContinueDialogue()
+        #region Dialogue Handling
+        
+        public async void OpenDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
-            // Continue to the next dialogue block if the current index is finished.
+            animationCancellation = new CancellationTokenSource();
+
+            currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
+            currentDialogue = await currentDialogueHandle;
+            
+            currentState = DialogueState.IN_PROGRESS;
+            
+            dialoguePanel.InitialiseDialogue(currentDialogue.DialogueBlocks[currentIndex]);
+
+            await AnimateText(currentDialogue.DialogueBlocks[currentIndex].Description, animationCancellation.Token).SuppressCancellationThrow();
+        }
+
+        private async void ContinueDialogue()
+        {
+            // Continue if the current index is finished.
             if (currentState == DialogueState.FINISHED)
             {
-                // Continue if there is another index.
+                // Start the next dialogue if there is another index.
                 if (currentIndex < currentDialogue.DialogueBlocks.Length - 1)
                 {
                     currentState = DialogueState.IN_PROGRESS;
                     currentIndex++;
             
-                    dialoguePanel.ShowDialogue(currentDialogue.DialogueBlocks[currentIndex]);
+                    dialoguePanel.InitialiseDialogue(currentDialogue.DialogueBlocks[currentIndex]);
+                    await AnimateText(currentDialogue.DialogueBlocks[currentIndex].Description, animationCancellation.Token).SuppressCancellationThrow();
                 }
                 // Finished.
                 else
                 {
-                    dialoguePanel.Hide();
-
-                    ResetDialogue();
+                    CloseDialogue();
                 }
             }
             // Skip progress and finish current dialogue.
             else
             {
+                animationCancellation.Cancel();
+                
+                dialoguePanel.SetDialogueText(currentDialogue.DialogueBlocks[currentIndex].Description);
+                
                 currentState = DialogueState.FINISHED;
-
-                dialoguePanel.Skip();
             }
         }
 
-        private DialogueScriptableObject GetDialogueByName(string dialogueName)
+        private void CloseDialogue()
         {
-            foreach (var dialogue in dialogues)
+            dialoguePanel.Hide();
+            
+            
+
+            ResetDialogue();
+        }
+        
+        
+        
+        #endregion Dialogue Handling
+        
+        #region Task Handling
+        
+        private async UniTask AnimateText(string text, CancellationToken cancellationToken)
+        {
+            stringBuilder.Clear();
+            
+            foreach (var character in text.ToCharArray())
             {
-                if (dialogue.name == dialogueName)
-                    return dialogue;
+                //cancellationToken.ThrowIfCancellationRequested();
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+                // // If player skips, break early.
+                // if (currentState == DialogueState.FINISHED)
+                // {
+                //     dialoguePanel.SetDialogueText(text);
+                //
+                //     return;
+                // }
+                
+                await UniTask.Delay(20, cancellationToken: cancellationToken).SuppressCancellationThrow();
+
+                stringBuilder.Append(character);
+                dialoguePanel.SetDialogueText(stringBuilder.ToString());
             }
             
-            Debug.LogError($"Failed to load: {dialogueName}");
-            return null;
+            currentState = DialogueState.FINISHED;
+        }
+        #endregion Task Handling
+        
+        #region Data Handling
+
+        private void DialogueScriptableObjectAsyncCompleted(
+            AsyncOperationHandle<DialogueScriptableObject> asyncOperationHandle)
+        {
+            
         }
 
         private void ResetDialogue()
@@ -93,5 +163,7 @@ namespace Dialogue
             currentState = DialogueState.NONE;
             currentIndex = 0;
         }
+        
+        #endregion
     }
 }

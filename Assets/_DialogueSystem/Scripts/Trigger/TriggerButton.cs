@@ -12,10 +12,10 @@ namespace Dialogue
         [SerializeField] private Button button;
         [SerializeField] private TMP_Text buttonText;
 
-        public void Initiate(string text, Action<string> onClick)
+        public void Initiate(DialogueScriptableObjectAssetReference dialogueAsset, Action<DialogueScriptableObjectAssetReference> onClick)
         {
-            button.onClick.AddListener(() => onClick?.Invoke(text));
-            buttonText.text = text;
+            button.onClick.AddListener(() => onClick?.Invoke(dialogueAsset));
+            buttonText.text = dialogueAsset.editorAsset.name;
         }
     }
 }
