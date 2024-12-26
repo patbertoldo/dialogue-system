@@ -96,7 +96,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 100}
+  m_CellSize: {x: 380, y: 150}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01562d37d45439d47b735a7711da915d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 0}
   triggerDialoguePrefab: {fileID: 3718872116242123928, guid: 144c812de71e2a747b618878dd835385, type: 3}
   container: {fileID: 3988971510133133925}
   triggerButton: {fileID: 0}

@@ -10,31 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
-  m_Name: 2_BoldItalicUnderline
+  m_Name: 7_ShowAndHideWithDelay
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 1
+  - alignment: 0
     emotion: 0
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: So with the first Show and Hide example, I had to put a lot of spaces
+      to create a fake delay while the program awaited each space.
+    textSpeed: 20
+  - alignment: 1
+    emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: Hey Patrick!
+    description: Mhm.
     textSpeed: 20
   - alignment: 0
     emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey Henry! Can you speak in <i>italics?
-    textSpeed: 20
-  - alignment: 1
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: No, but I can speak in <b>bold.
+    description: Now this example uses a markup delay before hiding. Bye!<wait=2><hide>
     textSpeed: 20
   - alignment: 0
     emotion: 0
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <u>Touche!
+    description: <show>Aaaand I'm back.
     textSpeed: 20
   - alignment: 1
     emotion: 1
     dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: <u><b><i>Touche!
+    description: <i>Nicuuu.
     textSpeed: 20

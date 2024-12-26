@@ -10,31 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
-  m_Name: 2_BoldItalicUnderline
+  m_Name: 8_ShakeWithDelay
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 1
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: Hey Patrick!
-    textSpeed: 20
   - alignment: 0
     emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey Henry! Can you speak in <i>italics?
+    description: Hey Lisa, why are you so angry all the time?
     textSpeed: 20
   - alignment: 1
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: No, but I can speak in <b>bold.
+    emotion: 3
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: Because <shake><wait=1>I've been waiting <shake><wait=1>for you
+      to finish <shake><wait=1>this project <shake><wait=1>for over <shake><wait=1>a
+      week!! <shake><wait=1><shake><wait=1><shake><wait=1>
     textSpeed: 20
   - alignment: 0
-    emotion: 0
+    emotion: 2
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <u>Touche!
+    description: I'm sorry. <wait=1>I got COVID last weekend. <wait=1>That was not
+      so fun.
     textSpeed: 20
-  - alignment: 1
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: <u><b><i>Touche!
+  - alignment: 0
+    emotion: 2
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: <shake>I missed Christmas!
     textSpeed: 20

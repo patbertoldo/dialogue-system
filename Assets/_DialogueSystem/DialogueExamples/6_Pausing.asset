@@ -10,31 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
-  m_Name: 2_BoldItalicUnderline
+  m_Name: 6_Pausing
   m_EditorClassIdentifier: 
   dialogueBlocks:
+  - alignment: 0
+    emotion: 1
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: Now we're getting a bit more complicated, <wait=1><i>Henry.
+    textSpeed: 20
   - alignment: 1
-    emotion: 0
+    emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: Hey Patrick!
+    description: Why I have no idea what you <wait=1><i>mean</i><wait=1> by that.
     textSpeed: 20
   - alignment: 0
     emotion: 4
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey Henry! Can you speak in <i>italics?
+    description: Oh I think you do with all these... <wait=2>delays!
     textSpeed: 20
   - alignment: 1
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: No, but I can speak in <b>bold.
-    textSpeed: 20
-  - alignment: 0
     emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <u>Touche!
-    textSpeed: 20
-  - alignment: 1
-    emotion: 1
     dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: <u><b><i>Touche!
+    description: '*finger guns*'
     textSpeed: 20

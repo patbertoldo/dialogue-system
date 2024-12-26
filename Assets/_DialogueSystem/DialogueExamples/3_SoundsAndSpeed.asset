@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
-  m_Name: 3_SpeedChanges
+  m_Name: 3_SoundsAndSpeed
   m_EditorClassIdentifier: 
   dialogueBlocks:
   - alignment: 1
@@ -25,6 +25,6 @@ MonoBehaviour:
     textSpeed: 5
   - alignment: 0
     emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     description: Hey, slow down there!
-    textSpeed: 50
+    textSpeed: 100

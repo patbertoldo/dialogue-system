@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 0432eb392c5685143adef1402d10fd85
   m_SerializeEntries:
+  - m_GUID: 0319612ecede25e4f91239ad7701e73f
+    m_Address: Assets/_DialogueSystem/DialogueExamples/8_Shake.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 109c5a66b28bf5b41afdd11648455a95
     m_Address: Assets/_DialogueSystem/DialogueExamples/2_BoldItalicUnderline.asset
     m_ReadOnly: 0
@@ -27,8 +32,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ebbee834017646469c760ae275ca099
+    m_Address: Assets/_DialogueSystem/DialogueExamples/9_SpeedWithDelay.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 732633cda027468488b8f777e678e979
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Patrick.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 893ed9334da69084d9ade08f0b0914ec
+    m_Address: Assets/_DialogueSystem/DialogueExamples/7_ShowAndHideWithDelay.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a036dac533f66604b8f9909376ac652c
+    m_Address: Assets/_DialogueSystem/DialogueExamples/6_Pausing.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
