@@ -37,6 +37,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62792cbd6d621a24caba5cf24d253b54
+    m_Address: Assets/_DialogueSystem/DialogueExamples/11_TooManyEmotions.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 732633cda027468488b8f777e678e979
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Patrick.asset
     m_ReadOnly: 0
@@ -69,6 +74,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c36238d27d075ae489d150b0795b8385
     m_Address: Assets/_DialogueSystem/DialogueExamples/4_Colours.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4ba48b288e3e524497dab25a7b4af4e
+    m_Address: Assets/_DialogueSystem/DialogueExamples/10_Emotions.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

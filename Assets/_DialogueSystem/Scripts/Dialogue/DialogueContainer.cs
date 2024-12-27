@@ -103,5 +103,13 @@ namespace Dialogue
                     isShaking = false;
                 });
         }
+
+        public void EmotionEffect(DialogueBlock dialogueBlock, Emotions emotion)
+        {
+            portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(emotion);
+            audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(emotion);
+
+            audioSource.Play();
+        }
     }
 }

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 10_Emotions
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - alignment: 0
+    emotion: 0
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: 'Emotions are tied together by two properties:
+
+      <b>a)</b>
+      The portrait above me and
+
+      <b>b)</b> The sound at the start of the dialogue.'
+    textSpeed: 20
+  - alignment: 1
+    emotion: 4
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: Are you saying that I can change my emotion mid dialogue?
+    textSpeed: 20
+  - alignment: 0
+    emotion: 1
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: Well, not only that! When an emotion changes, both properties are
+      played.
+    textSpeed: 20
+  - alignment: 1
+    emotion: 3
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: Wouldn't it be better to<speed=100>... <emotion=thinking><wait=1><speed=20>make
+      those separate?
+    textSpeed: 20
+  - alignment: 0
+    emotion: 0
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: Nah. <wait=1>It makes more sense that you always have one with the
+      other.<wait=1><emotion=thinking> We could maybe add other sounds for stuff
+      that's not emotion based! <wait=1> Let's not overscope for now.
+    textSpeed: 20

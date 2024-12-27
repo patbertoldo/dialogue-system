@@ -76,6 +76,11 @@ namespace Dialogue
         {
             currentDialogueContainer.ShakeEffect();
         }
+
+        public void EmotionEffectOnActiveDialogue(DialogueBlock dialogueBlock, Emotions emotion)
+        {
+            currentDialogueContainer.EmotionEffect(dialogueBlock, emotion);
+        }
         
         #endregion Effects
     }

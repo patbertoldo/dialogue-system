@@ -48,6 +48,7 @@ namespace Dialogue
         private const string markupShake = "shake";
         private const string markupShow = "show";
         private const string markupHide = "hide";
+        private const string markupEmotion = "emotion";
         
         public DialogueManager(DialoguePanel dialoguePanel)
         {
@@ -178,41 +179,35 @@ namespace Dialogue
                         var markupStripped = GetMarkupStripped(markup);
                         
                         // It would be nice to handle this area better.
-                        // If true, strip our custom tags from the animatingBuilder as TMP only hides its own tags.
-                        if (markupStripped == markupShow)
+                        if (EvaluateMarkupForEffects(markupStripped, markupShow, animatingBuilder, markup))
                         {
-                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-
                             dialoguePanel.ShowEffectOnActiveDialogue();
                         }
-                        else if (markupStripped == markupHide)
+                        else if (EvaluateMarkupForEffects(markupStripped, markupHide, animatingBuilder, markup))
                         {
-                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-
                             dialoguePanel.HideEffectOnActiveDialogue();
                         }
-                        else if (markupStripped == markupShake)
+                        else if (EvaluateMarkupForEffects(markupStripped, markupShake, animatingBuilder, markup))
                         {
-                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-
                             dialoguePanel.ShakeEffectOnActiveDialogue();
                         }
-                        else if (markupStripped == markupWait)
+                        else if (EvaluateMarkupForEffects(markupStripped, markupWait, animatingBuilder, markup))
                         {
-                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-                            
-                            int milliSeconds = GetMarkupValue(markup) * 1000;
+                            int milliSeconds = GetMarkupValueAsInt(markup) * 1000;
                             
                             if (!skip)
                             {
                                 await TryUniTask(UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token));
                             }
                         }
-                        else if (markupStripped == markupSpeed)
+                        else if (EvaluateMarkupForEffects(markupStripped, markupSpeed, animatingBuilder, markup))
                         {
-                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-
-                            textSpeed = GetMarkupValue(markup);
+                            textSpeed = GetMarkupValueAsInt(markup);
+                        }
+                        else if (EvaluateMarkupForEffects(markupStripped, markupEmotion, animatingBuilder, markup))
+                        {
+                            Emotions emotion = Enum.Parse<Emotions>(GetMarkupValueAsString(markup).ToUpper());
+                            dialoguePanel.EmotionEffectOnActiveDialogue(currentDialogue.DialogueBlocks[currentIndex], emotion);
                         }
 
                         markupBuilder.Clear();
@@ -239,12 +234,32 @@ namespace Dialogue
             return strippedMarkup;
         }
 
-        private int GetMarkupValue(string markup)
+        private int GetMarkupValueAsInt(string markup)
         {
             int indexAfterEquals = markup.IndexOf('=') + 1;
             int length = markup.Length - 1 - indexAfterEquals;  
             var result = markup.Substring(indexAfterEquals, length);
             return int.Parse(result);
+        }
+        
+        private string GetMarkupValueAsString(string markup)
+        {
+            int indexAfterEquals = markup.IndexOf('=') + 1;
+            int length = markup.Length - 1 - indexAfterEquals;  
+            return markup.Substring(indexAfterEquals, length);
+        }
+
+        private bool EvaluateMarkupForEffects(string markupStripped, string effectString, StringBuilder stringBuilder,
+            string markupToRemove)
+        {
+            // If true, strip our custom tags from the animatingBuilder as TMP only hides its own tags.
+            if (markupStripped == effectString)
+            {
+                stringBuilder.Remove(stringBuilder.Length - markupToRemove.Length, markupToRemove.Length);
+                return true;
+            }
+
+            return false;
         }
 
         private async UniTask TryUniTask(UniTask uniTask)
