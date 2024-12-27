@@ -13,7 +13,7 @@ namespace Dialogue
 {
     /// <summary>
     /// Dialogue State is for each piece of dialogue in a dialogue block, so we know when that dialogue
-    /// is animating a task, or has finished animating and is ready to move on.
+    /// is performing a task, or has finished a task and is ready to move on.
     /// </summary>
     public enum DialogueState
     {
@@ -36,7 +36,6 @@ namespace Dialogue
         // Tasks
         private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
         private CancellationTokenSource animationCancellation;
-
         
         // Text
         private StringBuilder animatingBuilder;
@@ -123,8 +122,6 @@ namespace Dialogue
 
         private void FinishDialogue()
         {
-            currentState = DialogueState.FINISHED;
-            
             animationCancellation.Dispose();
             
             currentIndex++;
@@ -235,16 +232,9 @@ namespace Dialogue
 
         private string GetMarkupStripped(string markup)
         {
-            string strippedMarkup = markup;
-
-            if (markup.Contains('='))
-            {
-                strippedMarkup = markup.Substring(1, markup.IndexOf('=') - 1);
-            }
-            else
-            {
-                strippedMarkup = markup.Substring(1, markup.IndexOf('>') - 1);
-            }
+            string strippedMarkup = markup.Contains('=')
+                ? markup.Substring(1, markup.IndexOf('=') - 1)
+                : markup.Substring(1, markup.IndexOf('>') - 1);
 
             return strippedMarkup;
         }
@@ -265,7 +255,7 @@ namespace Dialogue
             }
             catch (Exception e)
             {
-                // Ignore, cancellations are expected when player skips.
+                // Ignore, cancellations are expected when the player skips.
             }
         }
         

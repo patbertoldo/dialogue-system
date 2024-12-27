@@ -25,6 +25,10 @@ namespace Dialogue
         private const float shakeStrength = 20f;
         private const int shakeVibrato = 100;
         private const float shakeTime = 1f;
+        /// <summary>
+        /// Stops multi-shake calls from occuring, which can set a new position.
+        /// </summary>
+        private bool isShaking = false;
 
         /// <summary>
         /// Hidden stops effects from happening to the container, as it is a custom markup setting <hide>.
@@ -35,6 +39,7 @@ namespace Dialogue
         public void Initialise(DialogueBlock dialogueBlock)
         {
             canvasGroup.alpha = 0;
+            isShaking = false;
             hidden = false;
             
             if (dialogueBlock == null)
@@ -88,7 +93,15 @@ namespace Dialogue
 
         public void ShakeEffect()
         {
-            transform.DOShakePosition(shakeTime, shakeStrength, shakeVibrato);
+            if (isShaking)
+                return;
+            
+            isShaking = true;
+            transform.DOShakePosition(shakeTime, shakeStrength, shakeVibrato)
+                .OnComplete(() =>
+                {
+                    isShaking = false;
+                });
         }
     }
 }
