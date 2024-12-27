@@ -55,14 +55,38 @@ namespace Dialogue
             previousDialogueContainer = currentDialogueContainer;
         }
 
-        public void SetDialogueText(string text)
+        public void SetDialogueTextOnActiveDialogue(string text)
         {
             currentDialogueContainer.SetText(text);
         }
 
-        public void Skip()
+        public void SetCompletedOnActiveDialogue()
         {
-            onContinue.Invoke();
+            currentDialogueContainer.Completed();
         }
+        
+        #region Effects
+
+        public void ShowEffectOnActiveDialogue()
+        {
+            currentDialogueContainer.ShowEffect();
+        }
+        
+        public void HideEffectOnActiveDialogue()
+        {
+            currentDialogueContainer.HideEffect();
+        }
+        
+        public void ShakeEffectOnActiveDialogue()
+        {
+            currentDialogueContainer.ShakeEffect();
+        }
+
+        public void EmotionEffectOnActiveDialogue(DialogueBlock dialogueBlock, Emotions emotion)
+        {
+            currentDialogueContainer.EmotionEffect(dialogueBlock, emotion);
+        }
+        
+        #endregion Effects
     }
 }

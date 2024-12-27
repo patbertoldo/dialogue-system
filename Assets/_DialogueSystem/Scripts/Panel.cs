@@ -11,7 +11,7 @@ namespace Dialogue
 
         private const float fadeIn = 1f;
         private const float fadeOut = 0f;
-        private const float fadeTime = 0.5f;
+        private const float fadeTime = 0.15f;
         
         public virtual void Show()
         {

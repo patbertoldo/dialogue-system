@@ -13,7 +13,7 @@ namespace Dialogue
 {
     /// <summary>
     /// Dialogue State is for each piece of dialogue in a dialogue block, so we know when that dialogue
-    /// is animating a task, or has finished animating and is ready to move on.
+    /// is performing a task, or has finished a task and is ready to move on.
     /// </summary>
     public enum DialogueState
     {
@@ -35,10 +35,20 @@ namespace Dialogue
         
         // Tasks
         private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
-        
         private CancellationTokenSource animationCancellation;
-        private StringBuilder stringBuilder;
-
+        
+        // Text
+        private StringBuilder animatingBuilder;
+        private StringBuilder markupBuilder;
+        private bool skip;
+        
+        // Custom Markup
+        private const string markupWait = "wait";
+        private const string markupSpeed = "speed";
+        private const string markupShake = "shake";
+        private const string markupShow = "show";
+        private const string markupHide = "hide";
+        private const string markupEmotion = "emotion";
         
         public DialogueManager(DialoguePanel dialoguePanel)
         {
@@ -48,24 +58,17 @@ namespace Dialogue
             currentState = DialogueState.NONE;
             currentIndex = 0;
             
-            animationCancellation = new CancellationTokenSource();
-            stringBuilder = new StringBuilder();
+            animatingBuilder = new StringBuilder();
+            markupBuilder = new StringBuilder();
+            skip = false;
             
             dialoguePanel.SetContinueEvent(ContinueDialogue);
-        }
-
-        public void CleanUp()
-        {
-            //animationCancellation.Cancel();
-            animationCancellation.Dispose();
         }
 
         #region Dialogue Handling
         
         public async void OpenDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
-            animationCancellation = new CancellationTokenSource();
-
             currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
             currentDialogue = await currentDialogueHandle;
             
@@ -76,13 +79,13 @@ namespace Dialogue
             
             dialoguePanel.InitialiseDialogue(dialogueBlockLeft, dialogueBlockRight);
 
-            var task = UniTask.Delay(100, cancellationToken: animationCancellation.Token).SuppressCancellationThrow().GetAwaiter();
+            var task = UniTask.Delay(100).GetAwaiter();
             
             task.OnCompleted(PlayDialogue);
         }
 
         /// <summary>
-        /// UI event.
+        /// UI event. Animating text will skip to completion, or the current dialogue will close.
         /// </summary>
         private void ContinueDialogue()
         {
@@ -90,6 +93,7 @@ namespace Dialogue
             {
                 case DialogueState.PLAY:
                 {
+                    skip = true;
                     animationCancellation.Cancel();
                     break;
                 }
@@ -105,39 +109,23 @@ namespace Dialogue
         private async void PlayDialogue()
         {
             currentState = DialogueState.PLAY;
+            skip = false;
             
-            // I want to allow tasks to be cancelled, but once they are I don't think I can recycle
-            // the source, so each new play creates a new source.
             animationCancellation = new CancellationTokenSource();
-                    
+            
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
             dialoguePanel.NextDialogue(dialogueBlock);
 
-            try
-            {
-                await AnimateText(dialogueBlock.Description, animationCancellation.Token);
-                
-                currentState = DialogueState.FINISHED;
-            }
-            catch (Exception e)
-            {
-                SkipDialogue();
-            }
-        }
+            await BuildDialogueText(dialogueBlock.Description, dialogueBlock.TextSpeed);
 
-        private void SkipDialogue()
-        {
-            currentState = DialogueState.SKIPPED;
+            dialoguePanel.SetCompletedOnActiveDialogue();
             
-                    
-            var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
-
-            dialoguePanel.SetDialogueText(dialogueBlock.Description);
+            currentState = DialogueState.FINISHED;
         }
 
         private void FinishDialogue()
         {
-            currentState = DialogueState.FINISHED;
+            animationCancellation.Dispose();
             
             currentIndex++;
 
@@ -161,21 +149,140 @@ namespace Dialogue
         #endregion Dialogue Handling
         
         #region Task Handling
-        
-        private async UniTask AnimateText(string text, CancellationToken cancellationToken)
-        {
-            stringBuilder.Clear();
-            
-            foreach (var character in text.ToCharArray())
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                
-                await UniTask.Delay(20, cancellationToken: cancellationToken);
 
-                stringBuilder.Append(character);
-                dialoguePanel.SetDialogueText(stringBuilder.ToString());
+        private async UniTask BuildDialogueText(string rawDialogueText, int textSpeed)
+        {
+            animatingBuilder.Clear();
+            markupBuilder.Clear();
+
+            bool encounteredMarkup = false;
+            
+            foreach (var character in rawDialogueText.ToCharArray())
+            {
+                if (character == '<')
+                {
+                    encounteredMarkup = true;
+                    
+                    animatingBuilder.Append(character);
+                    markupBuilder.Append(character);
+                    continue;
+                }
+                
+                if (encounteredMarkup)
+                {
+                    animatingBuilder.Append(character);
+                    markupBuilder.Append(character);
+
+                    if (character == '>')
+                    {
+                        encounteredMarkup = false;
+
+                        var markup = markupBuilder.ToString();
+                        var markupStripped = GetMarkupStripped(markup);
+                        
+                        // It would be nice to handle this area better.
+                        if (EvaluateMarkupForEffects(markupStripped, markupShow, animatingBuilder, markup))
+                        {
+                            dialoguePanel.ShowEffectOnActiveDialogue();
+                        }
+                        else if (EvaluateMarkupForEffects(markupStripped, markupHide, animatingBuilder, markup))
+                        {
+                            dialoguePanel.HideEffectOnActiveDialogue();
+                        }
+                        else if (EvaluateMarkupForEffects(markupStripped, markupShake, animatingBuilder, markup))
+                        {
+                            dialoguePanel.ShakeEffectOnActiveDialogue();
+                        }
+                        else if (EvaluateMarkupForEffects(markupStripped, markupWait, animatingBuilder, markup))
+                        {
+                            int milliSeconds = (int)(GetMarkupValueAsFloat(markup) * 1000);
+                            
+                            if (!skip)
+                            {
+                                await TryUniTask(UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token));
+                            }
+                        }
+                        else if (EvaluateMarkupForEffects(markupStripped, markupSpeed, animatingBuilder, markup))
+                        {
+                            textSpeed = GetMarkupValueAsInt(markup);
+                        }
+                        else if (EvaluateMarkupForEffects(markupStripped, markupEmotion, animatingBuilder, markup))
+                        {
+                            Emotions emotion = Enum.Parse<Emotions>(GetMarkupValueAsString(markup).ToUpper());
+                            dialoguePanel.EmotionEffectOnActiveDialogue(currentDialogue.DialogueBlocks[currentIndex], emotion);
+                        }
+
+                        markupBuilder.Clear();
+                    }
+                    continue;
+                }
+
+                if (!skip)
+                {
+                    await TryUniTask(UniTask.Delay(textSpeed, cancellationToken: animationCancellation.Token));
+                }
+
+                animatingBuilder.Append(character);
+                dialoguePanel.SetDialogueTextOnActiveDialogue(animatingBuilder.ToString());
             }
         }
+
+        private string GetMarkupStripped(string markup)
+        {
+            string strippedMarkup = markup.Contains('=')
+                ? markup.Substring(1, markup.IndexOf('=') - 1)
+                : markup.Substring(1, markup.IndexOf('>') - 1);
+            return strippedMarkup;
+        }
+
+        private int GetMarkupValueAsInt(string markup)
+        {
+            int indexAfterEquals = markup.IndexOf('=') + 1;
+            int length = markup.Length - 1 - indexAfterEquals;  
+            var result = markup.Substring(indexAfterEquals, length);
+            return int.Parse(result);
+        }
+        
+        private float GetMarkupValueAsFloat(string markup)
+        {
+            int indexAfterEquals = markup.IndexOf('=') + 1;
+            int length = markup.Length - 1 - indexAfterEquals;  
+            var result = markup.Substring(indexAfterEquals, length);
+            return float.Parse(result);
+        }
+        
+        private string GetMarkupValueAsString(string markup)
+        {
+            int indexAfterEquals = markup.IndexOf('=') + 1;
+            int length = markup.Length - 1 - indexAfterEquals;  
+            return markup.Substring(indexAfterEquals, length);
+        }
+
+        private bool EvaluateMarkupForEffects(string markupStripped, string effectString, StringBuilder stringBuilder,
+            string markupToRemove)
+        {
+            // If true, strip our custom tags from the animatingBuilder as TMP only hides its own tags.
+            if (markupStripped == effectString)
+            {
+                stringBuilder.Remove(stringBuilder.Length - markupToRemove.Length, markupToRemove.Length);
+                return true;
+            }
+
+            return false;
+        }
+
+        private async UniTask TryUniTask(UniTask uniTask)
+        {
+            try
+            {
+                await uniTask;
+            }
+            catch (Exception e)
+            {
+                // Ignore, cancellations are expected when the player skips.
+            }
+        }
+        
         #endregion Task Handling
         
         #region Data Handling
@@ -186,9 +293,6 @@ namespace Dialogue
             currentDialogue = null;
             currentState = DialogueState.NONE;
             currentIndex = 0;
-            
-            animationCancellation.Dispose();
-            animationCancellation = null;
         }
         
         #endregion

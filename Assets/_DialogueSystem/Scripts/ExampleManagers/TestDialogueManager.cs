@@ -31,12 +31,6 @@ namespace Dialogue
             triggerManager.ShowTriggers(OnTriggerDialogueByName);
         }
 
-        private void OnDestroy()
-        {
-            // Loses reference before it can clean up.
-            //dialogueManager.CleanUp();
-        }
-
         #region Actions
 
         public void OnTriggerDialogueByName(DialogueScriptableObjectAssetReference dialogueAddressable)

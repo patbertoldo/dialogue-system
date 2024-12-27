@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 4_Colours
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - alignment: 0
+    emotion: 0
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: Okay so we can change the <color=red>colour</color> of the text.
+    textSpeed: 20
+  - alignment: 1
+    emotion: 3
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: That doesn't make me any less <color=red>angry</color>!!
+    textSpeed: 5
+  - alignment: 1
+    emotion: 0
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: Okay, I'll calm down.
+    textSpeed: 15
+  - alignment: 1
+    emotion: 1
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: <color=yellow>And <color=orange>be <color=red>a <color=blue>bit
+      <color=purple>more <b><color=yellow>h<color=orange>a<color=red>p<color=blue>p<color=purple>y<color=black>!
+    textSpeed: 15

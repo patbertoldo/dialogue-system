@@ -10,31 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
-  m_Name: 2_BoldItalicUnderline
+  m_Name: 9_SpeedWithDelay
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 1
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: Hey Patrick!
-    textSpeed: 20
-  - alignment: 0
-    emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey Henry! Can you speak in <i>italics?
-    textSpeed: 20
-  - alignment: 1
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: No, but I can speak in <b>bold.
-    textSpeed: 20
   - alignment: 0
     emotion: 0
     dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <u>Touche!
+    description: Lisa, <wait=1>just <speed=200>breath. <speed=40> Nice deep breaths.
+      <wait=1> Maybe try counting too.
+    textSpeed: 20
+  - alignment: 1
+    emotion: 3
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: Okay, let me try.<speed=200><wait=1> 1... <wait=1>2... <wait=1>3...
+    textSpeed: 20
+  - alignment: 0
+    emotion: 1
+    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    description: Hey how does that feel?
+    textSpeed: 20
+  - alignment: 1
+    emotion: 0
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: <speed=80>Ummmm.
     textSpeed: 20
   - alignment: 1
     emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: <u><b><i>Touche!
+    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    description: Pretty good!
     textSpeed: 20
