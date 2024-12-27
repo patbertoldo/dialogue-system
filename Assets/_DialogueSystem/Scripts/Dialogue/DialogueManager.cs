@@ -232,7 +232,6 @@ namespace Dialogue
             string strippedMarkup = markup.Contains('=')
                 ? markup.Substring(1, markup.IndexOf('=') - 1)
                 : markup.Substring(1, markup.IndexOf('>') - 1);
-
             return strippedMarkup;
         }
 
