@@ -59,6 +59,11 @@ namespace Dialogue
         {
             currentDialogueContainer.SetText(text);
         }
+
+        public void SetCompletedOnActiveDialogue()
+        {
+            currentDialogueContainer.Completed();
+        }
         
         #region Effects
 

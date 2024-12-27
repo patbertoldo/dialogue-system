@@ -118,6 +118,8 @@ namespace Dialogue
 
             await BuildDialogueText(dialogueBlock.Description, dialogueBlock.TextSpeed);
 
+            dialoguePanel.SetCompletedOnActiveDialogue();
+            
             currentState = DialogueState.FINISHED;
         }
 

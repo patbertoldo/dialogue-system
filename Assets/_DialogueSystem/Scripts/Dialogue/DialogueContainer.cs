@@ -16,6 +16,7 @@ namespace Dialogue
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private AudioSource audioSource;
+        [SerializeField] private GameObject completedGO;
         
         // Tweening
         private const float fadeIn = 1f;
@@ -41,6 +42,7 @@ namespace Dialogue
             canvasGroup.alpha = 0;
             isShaking = false;
             hidden = false;
+            completedGO.SetActive(false);
             
             if (dialogueBlock == null)
                 return;
@@ -61,12 +63,16 @@ namespace Dialogue
 
             audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(dialogueBlock.Emotion);
             
+            completedGO.SetActive(false);
+            
             if (!hidden)
                 ShowEffect();
         }
 
         public void PlayUnfocus()
         {
+            completedGO.SetActive(false);
+
             if (!hidden)
                 canvasGroup.DOFade(fadeOut, fadeTime);
         }
@@ -75,6 +81,13 @@ namespace Dialogue
         {
             descriptionText.text = text;
         }
+
+        public void Completed()
+        {
+            completedGO.SetActive(true);
+        }
+        
+        #region Effects
 
         public void ShowEffect()
         {
@@ -111,5 +124,7 @@ namespace Dialogue
 
             audioSource.Play();
         }
+        
+        #endregion Effects
     }
 }
