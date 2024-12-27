@@ -31,6 +31,6 @@ MonoBehaviour:
   - alignment: 1
     emotion: 1
     dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
-    description: And <color=yellow>be <color=orange>a <color=red>bit <color=blue>more
-      <color=grey><b>happy!
+    description: <color=yellow>And <color=orange>be <color=red>a <color=blue>bit
+      <color=purple>more <b><color=yellow>h<color=orange>a<color=red>p<color=blue>p<color=purple>y<color=black>!
     textSpeed: 15

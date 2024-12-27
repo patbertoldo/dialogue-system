@@ -35,9 +35,13 @@ namespace Dialogue
         
         // Tasks
         private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
-        
         private CancellationTokenSource animationCancellation;
+
+        
+        // Text
         private StringBuilder animatingBuilder;
+        private StringBuilder markupBuilder;
+        private bool skip;
         
         // Custom Markup
         private const string markupWait = "wait";
@@ -54,8 +58,9 @@ namespace Dialogue
             currentState = DialogueState.NONE;
             currentIndex = 0;
             
-            animationCancellation = new CancellationTokenSource();
             animatingBuilder = new StringBuilder();
+            markupBuilder = new StringBuilder();
+            skip = false;
             
             dialoguePanel.SetContinueEvent(ContinueDialogue);
         }
@@ -64,8 +69,6 @@ namespace Dialogue
         
         public async void OpenDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
-            animationCancellation = new CancellationTokenSource();
-
             currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
             currentDialogue = await currentDialogueHandle;
             
@@ -76,13 +79,13 @@ namespace Dialogue
             
             dialoguePanel.InitialiseDialogue(dialogueBlockLeft, dialogueBlockRight);
 
-            var task = UniTask.Delay(100, cancellationToken: animationCancellation.Token).SuppressCancellationThrow().GetAwaiter();
+            var task = UniTask.Delay(100).GetAwaiter();
             
             task.OnCompleted(PlayDialogue);
         }
 
         /// <summary>
-        /// UI event.
+        /// UI event. Animating text will skip to completion, or the current dialogue will close.
         /// </summary>
         private void ContinueDialogue()
         {
@@ -90,6 +93,7 @@ namespace Dialogue
             {
                 case DialogueState.PLAY:
                 {
+                    skip = true;
                     animationCancellation.Cancel();
                     break;
                 }
@@ -105,39 +109,23 @@ namespace Dialogue
         private async void PlayDialogue()
         {
             currentState = DialogueState.PLAY;
+            skip = false;
             
-            // I want to allow tasks to be cancelled, but once they are I don't think I can recycle
-            // the source, so each new play creates a new source.
             animationCancellation = new CancellationTokenSource();
-                    
+            
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
             dialoguePanel.NextDialogue(dialogueBlock);
 
-            try
-            {
-                await AnimateText(dialogueBlock.Description, dialogueBlock.TextSpeed, animationCancellation.Token);
-                
-                currentState = DialogueState.FINISHED;
-            }
-            catch (Exception e)
-            {
-                SkipDialogue();
-            }
-        }
+            await BuildDialogueText(dialogueBlock.Description, dialogueBlock.TextSpeed);
 
-        private void SkipDialogue()
-        {
-            currentState = DialogueState.SKIPPED;
-            
-                    
-            var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
-
-            dialoguePanel.SetDialogueTextOnActiveDialogue(dialogueBlock.Description);
+            currentState = DialogueState.FINISHED;
         }
 
         private void FinishDialogue()
         {
             currentState = DialogueState.FINISHED;
+            
+            animationCancellation.Dispose();
             
             currentIndex++;
 
@@ -161,18 +149,25 @@ namespace Dialogue
         #endregion Dialogue Handling
         
         #region Task Handling
-        
-        private async UniTask AnimateText(string text, int textSpeed, CancellationToken cancellationToken)
+
+        private async UniTask BuildDialogueText(string rawDialogueText, int textSpeed)
         {
             animatingBuilder.Clear();
-            StringBuilder markupBuilder = new StringBuilder();
+            markupBuilder.Clear();
 
             bool encounteredMarkup = false;
             
-            foreach (var character in text.ToCharArray())
+            foreach (var character in rawDialogueText.ToCharArray())
             {
-                cancellationToken.ThrowIfCancellationRequested();
-
+                if (character == '<')
+                {
+                    encounteredMarkup = true;
+                    
+                    animatingBuilder.Append(character);
+                    markupBuilder.Append(character);
+                    continue;
+                }
+                
                 if (encounteredMarkup)
                 {
                     animatingBuilder.Append(character);
@@ -185,6 +180,7 @@ namespace Dialogue
                         var markup = markupBuilder.ToString();
                         var markupStripped = GetMarkupStripped(markup);
                         
+                        // It would be nice to handle this area better.
                         // If true, strip our custom tags from the animatingBuilder as TMP only hides its own tags.
                         if (markupStripped == markupShow)
                         {
@@ -207,8 +203,13 @@ namespace Dialogue
                         else if (markupStripped == markupWait)
                         {
                             animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+                            
                             int milliSeconds = GetMarkupValue(markup) * 1000;
-                            await UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token);
+                            
+                            if (!skip)
+                            {
+                                await TryUniTask(UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token));
+                            }
                         }
                         else if (markupStripped == markupSpeed)
                         {
@@ -222,16 +223,10 @@ namespace Dialogue
                     continue;
                 }
 
-                if (character == '<')
+                if (!skip)
                 {
-                    encounteredMarkup = true;
-                    
-                    animatingBuilder.Append(character);
-                    markupBuilder.Append(character);
-                    continue;
+                    await TryUniTask(UniTask.Delay(textSpeed, cancellationToken: animationCancellation.Token));
                 }
-                
-                await UniTask.Delay(textSpeed, cancellationToken: cancellationToken);
 
                 animatingBuilder.Append(character);
                 dialoguePanel.SetDialogueTextOnActiveDialogue(animatingBuilder.ToString());
@@ -262,11 +257,16 @@ namespace Dialogue
             return int.Parse(result);
         }
 
-        private async UniTask CustomMarkup(string text)
+        private async UniTask TryUniTask(UniTask uniTask)
         {
-            // It would be great to move all the markup if statements out of AnimateText and into here.
-            // I'm not sure how I would return the different values I need for the animate text speed 
-            // and delay.
+            try
+            {
+                await uniTask;
+            }
+            catch (Exception e)
+            {
+                // Ignore, cancellations are expected when player skips.
+            }
         }
         
         #endregion Task Handling
@@ -279,9 +279,6 @@ namespace Dialogue
             currentDialogue = null;
             currentState = DialogueState.NONE;
             currentIndex = 0;
-            
-            animationCancellation.Dispose();
-            animationCancellation = null;
         }
         
         #endregion
