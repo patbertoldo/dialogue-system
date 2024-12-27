@@ -193,7 +193,7 @@ namespace Dialogue
                         }
                         else if (EvaluateMarkupForEffects(markupStripped, markupWait, animatingBuilder, markup))
                         {
-                            int milliSeconds = GetMarkupValueAsInt(markup) * 1000;
+                            int milliSeconds = (int)(GetMarkupValueAsFloat(markup) * 1000);
                             
                             if (!skip)
                             {
@@ -240,6 +240,14 @@ namespace Dialogue
             int length = markup.Length - 1 - indexAfterEquals;  
             var result = markup.Substring(indexAfterEquals, length);
             return int.Parse(result);
+        }
+        
+        private float GetMarkupValueAsFloat(string markup)
+        {
+            int indexAfterEquals = markup.IndexOf('=') + 1;
+            int length = markup.Length - 1 - indexAfterEquals;  
+            var result = markup.Substring(indexAfterEquals, length);
+            return float.Parse(result);
         }
         
         private string GetMarkupValueAsString(string markup)
