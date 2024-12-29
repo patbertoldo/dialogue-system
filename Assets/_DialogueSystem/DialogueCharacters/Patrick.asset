@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Patrick
   m_EditorClassIdentifier: 
   name: Patrick
+  nameColor: blue
   portraits:
   - {fileID: 21300000, guid: 0ee52530b4ca8b743a8672838a63f70d, type: 3}
   - {fileID: 21300000, guid: 75620e7d587d6054f901f43469b0c119, type: 3}

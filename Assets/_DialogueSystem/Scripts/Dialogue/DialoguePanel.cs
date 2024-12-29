@@ -7,52 +7,71 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEngine.Pool;
 
 namespace Dialogue
 {
     public class DialoguePanel : Panel
     {
-        [SerializeField] private DialogueContainer dialogueContainerLeft;
-        [SerializeField] private DialogueContainer dialogueContainerRight;
+        [SerializeField] private DialogueContainer dialogueContainerPrefab;
+        [SerializeField] private Transform dialogueContainerParent;
         [SerializeField] private Button continueButton;
 
-        private Action onContinue;
+        [SerializeField] private Transform startPosition;
+        [SerializeField] private Transform endPosition;
+        
+        [SerializeField] DialogueContainer[] dialogueContainers;
         
         DialogueContainer currentDialogueContainer;
-        DialogueContainer previousDialogueContainer;
+
+        private Action onContinue;
+
+        private DialogueContainer GetDialogueContainer(DialogueContainerState state)
+        {
+            foreach (var dialogueContainer in dialogueContainers)
+            {
+                if (dialogueContainer.DialogueContainerState == state)
+                {
+                    return dialogueContainer;
+                }
+            }
+            return null;
+        }
 
         public void SetContinueEvent(Action onContinue)
         {
             this.onContinue = onContinue;
             continueButton.onClick.AddListener(() => this.onContinue.Invoke());
         }
-        
-        public void InitialiseDialogue(DialogueBlock dialogueBlockLeft, DialogueBlock dialogueBlockRight)
-        {
-            Show();
 
-            dialogueContainerLeft.Initialise(dialogueBlockLeft);
-            dialogueContainerRight.Initialise(dialogueBlockRight);
+        public void PlayDialogue(DialogueBlock dialogueBlock)
+        {
+            currentDialogueContainer = GetDialogueContainer(DialogueContainerState.OFF);
+            var dialogueToUnfocus = GetDialogueContainer(DialogueContainerState.FOCUSED);
+            var dialogueToFinish = GetDialogueContainer(DialogueContainerState.UNFOCUSED);
+
+            currentDialogueContainer.Initialise(dialogueBlock);
+            currentDialogueContainer.PlayFocus(dialogueBlock, startPosition.localPosition);
+
+            dialogueToUnfocus?.PlayUnfocus(endPosition.localPosition);
+            dialogueToFinish?.PlayFinished();
         }
 
-        public void NextDialogue(DialogueBlock dialogueBlock)
+        public override void Hide()
         {
-            currentDialogueContainer = dialogueBlock.Alignment == DialogueAlignment.LEFT
-                ? dialogueContainerLeft
-                : dialogueContainerRight;
-            
-            currentDialogueContainer.PlayFocus(dialogueBlock);
+            CompleteDialogue();
 
-            // Unfocus the previous dialogue if needed.
-            if (previousDialogueContainer != null)
-            {
-                if (previousDialogueContainer != currentDialogueContainer)
-                {
-                    previousDialogueContainer.PlayUnfocus();
-                }
-            }
+            base.Hide();
+        }
+
+        public void CompleteDialogue()
+        {
+            currentDialogueContainer = null;
             
-            previousDialogueContainer = currentDialogueContainer;
+            foreach (var dialogueContainer in dialogueContainers)
+            {
+                dialogueContainer.PlayFinished();
+            }
         }
 
         public void SetDialogueTextOnActiveDialogue(string text)
@@ -62,7 +81,7 @@ namespace Dialogue
 
         public void SetCompletedOnActiveDialogue()
         {
-            currentDialogueContainer.Completed();
+            currentDialogueContainer.TextCompleted();
         }
         
         #region Effects

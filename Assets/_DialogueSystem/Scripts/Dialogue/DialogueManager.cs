@@ -72,16 +72,11 @@ namespace Dialogue
             currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
             currentDialogue = await currentDialogueHandle;
             
-            // Get the first dialogue for the left side of the conversation and the right.
-            // For dialogues that only have one side, pass null for the other side.
-            DialogueBlock dialogueBlockLeft = currentDialogue.GetFirstInstanceOfAlignment(DialogueAlignment.LEFT);
-            DialogueBlock dialogueBlockRight = currentDialogue.GetFirstInstanceOfAlignment(DialogueAlignment.RIGHT);
-            
-            dialoguePanel.InitialiseDialogue(dialogueBlockLeft, dialogueBlockRight);
+            dialoguePanel.Show();
 
-            var task = UniTask.Delay(100).GetAwaiter();
+            await UniTask.Delay(100);
             
-            task.OnCompleted(PlayDialogue);
+            PlayDialogue();
         }
 
         /// <summary>
@@ -111,12 +106,21 @@ namespace Dialogue
             currentState = DialogueState.PLAY;
             skip = false;
             
+            // Each new dialogue needs a new cancellation token. It doesn't seem like tokens that have been
+            // cancelled can be recycled.
             animationCancellation = new CancellationTokenSource();
             
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
-            dialoguePanel.NextDialogue(dialogueBlock);
+            dialoguePanel.PlayDialogue(dialogueBlock);
 
-            await BuildDialogueText(dialogueBlock.Description, dialogueBlock.TextSpeed);
+            bool isSameCharacter = false;
+            if (currentIndex > 0)
+            {
+                isSameCharacter = currentDialogue.DialogueBlocks[currentIndex].DialogueCharacter ==
+                    currentDialogue.DialogueBlocks[currentIndex - 1].DialogueCharacter;
+            }
+            
+            await BuildDialogueText(dialogueBlock, isSameCharacter);
 
             dialoguePanel.SetCompletedOnActiveDialogue();
             
@@ -150,14 +154,22 @@ namespace Dialogue
         
         #region Task Handling
 
-        private async UniTask BuildDialogueText(string rawDialogueText, int textSpeed)
+        private async UniTask BuildDialogueText(DialogueBlock dialogueBlock, bool isSameCharacter)
         {
             animatingBuilder.Clear();
             markupBuilder.Clear();
 
             bool encounteredMarkup = false;
+            var textSpeed  = dialogueBlock.TextSpeed;
+
+            var name = dialogueBlock.DialogueCharacter.Name;
+            var nameColor = dialogueBlock.DialogueCharacter.NameColor;
             
-            foreach (var character in rawDialogueText.ToCharArray())
+            // When it's a new character, add their name to the start of the text. Add bold and color.
+            if (!isSameCharacter)
+                animatingBuilder.Append($"<b><color={nameColor}>{name}:</color></b> ");
+            
+            foreach (var character in dialogueBlock.Description.ToCharArray())
             {
                 if (character == '<')
                 {

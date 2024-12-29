@@ -17,12 +17,14 @@ namespace Dialogue
     public class DialogueCharacterScriptableObject : ScriptableObject
     {
         [SerializeField] private new string name;
+        [SerializeField] private string nameColor;
         [Tooltip("Portraits should be ordered according to emotions.")]
         [SerializeField] private Sprite[] portraits;
         [Tooltip("Sounds should be ordered according to emotions.")]
         [SerializeField] private AudioClip[] audioClips;
 
         public string Name => name;
+        public string NameColor => nameColor;
         
         public Sprite GetPortrait(Emotions emotion)
         {

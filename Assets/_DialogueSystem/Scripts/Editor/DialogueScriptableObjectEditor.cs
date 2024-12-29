@@ -9,6 +9,10 @@ namespace Dialogue.Editor
     public class DialogueScriptableObjectEditor : UnityEditor.Editor
     {
         private const string buttonText = "Test In Play Mode";
+        private const string urlButtonText = "See Supported Text Colors";
+
+        private const string textMeshProURL =
+            "https://docs.unity3d.com/Packages/com.unity.textmeshpro@4.0/manual/RichTextColor.html";
         
         public override void OnInspectorGUI()
         {
@@ -31,6 +35,11 @@ namespace Dialogue.Editor
                         .CreateAssetReference(address);
                     //FindObjectOfType<DialogueManager>().OpenDialogue(assetReference);
                 }
+            }
+
+            if (GUILayout.Button(urlButtonText))
+            {
+                Application.OpenURL(textMeshProURL);
             }
         }
     }

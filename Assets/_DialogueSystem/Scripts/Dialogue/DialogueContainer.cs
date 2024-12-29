@@ -5,18 +5,31 @@ using System.Text;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace Dialogue
 {
+    public enum DialogueContainerState
+    {
+        OFF,
+        FOCUSED,
+        UNFOCUSED
+    }
+    
     public class DialogueContainer : MonoBehaviour
     {
+        [SerializeField] private DialogueContainerLayout layoutLeft;
+        [SerializeField] private DialogueContainerLayout layoutRight;
         [SerializeField] private CanvasGroup canvasGroup;
-        [SerializeField] private Image portrait;
-        [SerializeField] private TMP_Text nameText;
-        [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private GameObject completedGO;
+        
+        private Image portrait;
+        private TMP_Text descriptionText;
+
+        private DialogueContainerState dialogueContainerState = DialogueContainerState.OFF;
+        public DialogueContainerState DialogueContainerState => dialogueContainerState;
         
         // Tweening
         private const float fadeIn = 1f;
@@ -26,6 +39,10 @@ namespace Dialogue
         private const float shakeStrength = 20f;
         private const int shakeVibrato = 100;
         private const float shakeTime = 1f;
+
+        private const float moveTime = 0.25f;
+        private Vector3 moveScale = new (0.9f, 0.9f, 0.9f);
+        
         /// <summary>
         /// Stops multi-shake calls from occuring, which can set a new position.
         /// </summary>
@@ -42,39 +59,55 @@ namespace Dialogue
             canvasGroup.alpha = 0;
             isShaking = false;
             hidden = false;
+            transform.localScale = Vector3.one;
+            canvasGroup.alpha = 0;
+            gameObject.SetActive(true);
             completedGO.SetActive(false);
-            
-            if (dialogueBlock == null)
-                return;
-            
+            layoutLeft.gameObject.SetActive(false);
+            layoutRight.gameObject.SetActive(false);
+
+            DialogueContainerLayout layout = dialogueBlock.Alignment == DialogueAlignment.LEFT
+                ? layoutLeft
+                : layoutRight;
+            layout.gameObject.SetActive(true);
+
+            portrait = layout.Portrait;
             portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(dialogueBlock.Emotion);
-
-            nameText.text = dialogueBlock.DialogueCharacter.Name;
-            descriptionText.text = "";
-
-            canvasGroup.alpha = fadeOut;
-        }
-
-        public void PlayFocus(DialogueBlock dialogueBlock)
-        {
-            portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(dialogueBlock.Emotion);
-
-            nameText.text = dialogueBlock.DialogueCharacter.Name;
-
             audioSource.clip = dialogueBlock.DialogueCharacter.GetAudioClip(dialogueBlock.Emotion);
-            
-            completedGO.SetActive(false);
-            
-            if (!hidden)
-                ShowEffect();
+
+            descriptionText = layout.DescriptionText;
+            descriptionText.text = "";
         }
 
-        public void PlayUnfocus()
+        public void PlayFocus(DialogueBlock dialogueBlock, Vector3 position)
         {
+            dialogueContainerState = DialogueContainerState.FOCUSED;
+            
+            portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(dialogueBlock.Emotion);
+            transform.localPosition = position;
+            transform.SetAsLastSibling();
+
+            ShowEffect();
+        }
+
+        public void PlayUnfocus(Vector3 position)
+        {
+            dialogueContainerState = DialogueContainerState.UNFOCUSED;
+            
             completedGO.SetActive(false);
 
+            transform.DOLocalMove(position, moveTime);
+            transform.DOScale(moveScale, moveTime);
+            
             if (!hidden)
                 canvasGroup.DOFade(fadeOut, fadeTime);
+        }
+
+        public void PlayFinished(bool forceOff = false)
+        {
+            dialogueContainerState = DialogueContainerState.OFF;
+            
+            canvasGroup.DOFade(0, fadeTime).OnComplete(() => completedGO.SetActive(false));
         }
 
         public void SetText(string text)
@@ -82,11 +115,17 @@ namespace Dialogue
             descriptionText.text = text;
         }
 
-        public void Completed()
+        public void TextCompleted()
         {
             completedGO.SetActive(true);
         }
-        
+
+        private void OnDisable()
+        {
+            canvasGroup.DOKill(true);
+            transform.DOKill(true);
+        }
+
         #region Effects
 
         public void ShowEffect()
