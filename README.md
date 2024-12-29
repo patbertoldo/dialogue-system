@@ -1,7 +1,7 @@
 # dialogue-system
 Built in Unity 2022.3.43f1.
 
-This is a dialogue system that supports 2 way conversations in the screen space UI. It also supports monologing / one way dialogue.
+This is a dialogue system that allows characters to talk. During conversations, the next dialogue will appear and the previous one will move up and stay visible so the player can refer back to it.
 
 ## Features
 ### Addressables
