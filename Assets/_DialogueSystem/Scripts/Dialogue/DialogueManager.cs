@@ -72,16 +72,11 @@ namespace Dialogue
             currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
             currentDialogue = await currentDialogueHandle;
             
-            // Get the first dialogue for the left side of the conversation and the right.
-            // For dialogues that only have one side, pass null for the other side.
-            DialogueBlock dialogueBlockLeft = currentDialogue.GetFirstInstanceOfAlignment(DialogueAlignment.LEFT);
-            DialogueBlock dialogueBlockRight = currentDialogue.GetFirstInstanceOfAlignment(DialogueAlignment.RIGHT);
-            
-            dialoguePanel.InitialiseDialogue(dialogueBlockLeft, dialogueBlockRight);
+            dialoguePanel.Show();
 
-            var task = UniTask.Delay(100).GetAwaiter();
+            await UniTask.Delay(100);
             
-            task.OnCompleted(PlayDialogue);
+            PlayDialogue();
         }
 
         /// <summary>
@@ -111,10 +106,12 @@ namespace Dialogue
             currentState = DialogueState.PLAY;
             skip = false;
             
+            // Each new dialogue needs a new cancellation token. It doesn't seem like tokens that have been
+            // cancelled can be recycled.
             animationCancellation = new CancellationTokenSource();
             
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
-            dialoguePanel.NextDialogue(dialogueBlock);
+            dialoguePanel.PlayDialogue(dialogueBlock);
 
             await BuildDialogueText(dialogueBlock.Description, dialogueBlock.TextSpeed);
 
