@@ -113,7 +113,14 @@ namespace Dialogue
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
             dialoguePanel.PlayDialogue(dialogueBlock);
 
-            await BuildDialogueText(dialogueBlock.Description, dialogueBlock.TextSpeed);
+            bool isSameCharacter = false;
+            if (currentIndex > 0)
+            {
+                isSameCharacter = currentDialogue.DialogueBlocks[currentIndex].DialogueCharacter ==
+                    currentDialogue.DialogueBlocks[currentIndex - 1].DialogueCharacter;
+            }
+            
+            await BuildDialogueText(dialogueBlock, isSameCharacter);
 
             dialoguePanel.SetCompletedOnActiveDialogue();
             
@@ -147,14 +154,22 @@ namespace Dialogue
         
         #region Task Handling
 
-        private async UniTask BuildDialogueText(string rawDialogueText, int textSpeed)
+        private async UniTask BuildDialogueText(DialogueBlock dialogueBlock, bool isSameCharacter)
         {
             animatingBuilder.Clear();
             markupBuilder.Clear();
 
             bool encounteredMarkup = false;
+            var textSpeed  = dialogueBlock.TextSpeed;
+
+            var name = dialogueBlock.DialogueCharacter.Name;
+            var nameColor = dialogueBlock.DialogueCharacter.NameColor;
             
-            foreach (var character in rawDialogueText.ToCharArray())
+            // When it's a new character, add their name to the start of the text. Add bold and color.
+            if (!isSameCharacter)
+                animatingBuilder.Append($"<b><color={nameColor}>{name}:</color></b> ");
+            
+            foreach (var character in dialogueBlock.Description.ToCharArray())
             {
                 if (character == '<')
                 {
