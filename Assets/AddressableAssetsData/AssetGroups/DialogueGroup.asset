@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: DialogueGroup
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: DialogueGroup
   m_Data:
     m_SerializedData: []
   m_GUID: 0432eb392c5685143adef1402d10fd85
@@ -20,72 +20,146 @@ MonoBehaviour:
   - m_GUID: 0319612ecede25e4f91239ad7701e73f
     m_Address: Assets/_DialogueSystem/DialogueExamples/8_Shake.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ee52530b4ca8b743a8672838a63f70d
+    m_Address: Assets/_DialogueSystem/Sprites/PortraitGreyboxing/DialoguePortrait_Default.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 109c5a66b28bf5b41afdd11648455a95
     m_Address: Assets/_DialogueSystem/DialogueExamples/2_BoldItalicUnderline.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f348b0dd1a11ea44ad0dbf500631d3e
+    m_Address: Assets/_DialogueSystem/AudioClips/Default.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4da51fe1357d4f348a04c2092a92476f
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Henry.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - DialogueCharacter
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4ebbee834017646469c760ae275ca099
     m_Address: Assets/_DialogueSystem/DialogueExamples/9_SpeedWithDelay.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 62792cbd6d621a24caba5cf24d253b54
     m_Address: Assets/_DialogueSystem/DialogueExamples/11_TooManyEmotions.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 732633cda027468488b8f777e678e979
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Patrick.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - DialogueCharacter
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75620e7d587d6054f901f43469b0c119
+    m_Address: Assets/_DialogueSystem/Sprites/PortraitGreyboxing/DialoguePortrait_Happy.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 893ed9334da69084d9ade08f0b0914ec
     m_Address: Assets/_DialogueSystem/DialogueExamples/7_ShowAndHideWithDelay.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a036dac533f66604b8f9909376ac652c
     m_Address: Assets/_DialogueSystem/DialogueExamples/6_Pausing.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a450f4333bbcb964ea5fb18b2c25662f
+    m_Address: Assets/_DialogueSystem/Sprites/PortraitGreyboxing/DialoguePortrait_Thinking.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6255ece17922c149b2bb512326190e3
+    m_Address: Assets/_DialogueSystem/AudioClips/Happy.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af53c3f4058abb743b9d67228914b873
+    m_Address: Assets/_DialogueSystem/Sprites/PortraitGreyboxing/DialoguePortrait_Angry.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af8ec95ad12565a43a2d2093a0df8efc
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Lisa.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - DialogueCharacter
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9ade429025d50747b9ca0d5866589be
     m_Address: Assets/_DialogueSystem/DialogueExamples/3_DialogueWithLisa.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bc391651abf3f054794bc7df1def0df8
     m_Address: Assets/_DialogueSystem/DialogueExamples/1_Intro.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c36238d27d075ae489d150b0795b8385
     m_Address: Assets/_DialogueSystem/DialogueExamples/4_Colours.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c67f147a670defa4bbc192085fa14ffb
+    m_Address: Assets/_DialogueSystem/AudioClips/Sad.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3e0d06965defbc49807cd72bac68cde
+    m_Address: Assets/_DialogueSystem/Sprites/PortraitGreyboxing/DialoguePortrait_Sad.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e00f50400d3bad546a6f09f200dfc9bc
+    m_Address: Assets/_DialogueSystem/AudioClips/Angry.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4ba48b288e3e524497dab25a7b4af4e
     m_Address: Assets/_DialogueSystem/DialogueExamples/10_Emotions.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ea052b5dc1e7f3c46ac21f815d7a246a
     m_Address: Assets/_DialogueSystem/DialogueExamples/5_ShowAndHide.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0001702aafc59941bf55b530ffa7e73
+    m_Address: Assets/_DialogueSystem/AudioClips/Thinking.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 87e23100c0548be4886b622637008b1e, type: 2}

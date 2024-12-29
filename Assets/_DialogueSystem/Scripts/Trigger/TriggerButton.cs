@@ -15,7 +15,9 @@ namespace Dialogue
         public void Initiate(DialogueScriptableObjectAssetReference dialogueAsset, Action<DialogueScriptableObjectAssetReference> onClick)
         {
             button.onClick.AddListener(() => onClick?.Invoke(dialogueAsset));
+            #if UNITY_EDITOR
             buttonText.text = dialogueAsset.editorAsset.name;
+            #endif
         }
     }
 }

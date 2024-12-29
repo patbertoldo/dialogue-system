@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 0432eb392c5685143adef1402d10fd85
   m_currentHash:
     serializedVersion: 2
-    Hash: 724101ffb690d0642ad9ecb997de671f
+    Hash: 5376c1efd851ac1ecfe6bfc00347cfe8
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -87,6 +87,9 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - DialogueCharacter
+    - DialogueShared
+    - Dialogue
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: bfc3f3f14d01ece4e89517aea33be083, type: 2}
