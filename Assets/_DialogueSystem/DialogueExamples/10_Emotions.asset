@@ -19,7 +19,7 @@ MonoBehaviour:
     description: 'Emotions are tied together by two properties:
 
       <b>a)</b>
-      The portrait above me and
+      The character portrait and
 
       <b>b)</b> The sound at the start of the dialogue.'
     textSpeed: 20

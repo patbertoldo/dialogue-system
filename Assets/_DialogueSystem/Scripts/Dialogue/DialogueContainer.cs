@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.UI;
 
 namespace Dialogue

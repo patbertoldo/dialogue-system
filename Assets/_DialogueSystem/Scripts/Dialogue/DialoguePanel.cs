@@ -1,13 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine.Pool;
 
 namespace Dialogue
 {

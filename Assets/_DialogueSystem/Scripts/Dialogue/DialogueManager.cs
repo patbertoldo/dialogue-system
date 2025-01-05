@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -40,14 +36,15 @@ namespace Dialogue
         // Text
         private StringBuilder animatingBuilder;
         private StringBuilder markupBuilder;
+        private int textSpeed;
         private bool skip;
         
         // Custom Markup
-        private const string markupWait = "wait";
-        private const string markupSpeed = "speed";
-        private const string markupShake = "shake";
         private const string markupShow = "show";
         private const string markupHide = "hide";
+        private const string markupShake = "shake";
+        private const string markupWait = "wait";
+        private const string markupSpeed = "speed";
         private const string markupEmotion = "emotion";
         
         public DialogueManager(DialoguePanel dialoguePanel)
@@ -60,6 +57,7 @@ namespace Dialogue
             
             animatingBuilder = new StringBuilder();
             markupBuilder = new StringBuilder();
+            textSpeed = 0;
             skip = false;
             
             dialoguePanel.SetContinueEvent(ContinueDialogue);
@@ -103,22 +101,23 @@ namespace Dialogue
 
         private async void PlayDialogue()
         {
+            var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
+
             currentState = DialogueState.PLAY;
+            textSpeed = dialogueBlock.TextSpeed;
             skip = false;
-            
             // Each new dialogue needs a new cancellation token. It doesn't seem like tokens that have been
             // cancelled can be recycled.
             animationCancellation = new CancellationTokenSource();
-            
-            var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
-            dialoguePanel.PlayDialogue(dialogueBlock);
 
             bool isSameCharacter = false;
             if (currentIndex > 0)
             {
-                isSameCharacter = currentDialogue.DialogueBlocks[currentIndex].DialogueCharacter ==
-                    currentDialogue.DialogueBlocks[currentIndex - 1].DialogueCharacter;
+                isSameCharacter = dialogueBlock.DialogueCharacter ==
+                                  currentDialogue.DialogueBlocks[currentIndex - 1].DialogueCharacter;
             }
+            
+            dialoguePanel.PlayDialogue(dialogueBlock);
             
             await BuildDialogueText(dialogueBlock, isSameCharacter);
 
@@ -160,7 +159,6 @@ namespace Dialogue
             markupBuilder.Clear();
 
             bool encounteredMarkup = false;
-            var textSpeed  = dialogueBlock.TextSpeed;
 
             var name = dialogueBlock.DialogueCharacter.Name;
             var nameColor = dialogueBlock.DialogueCharacter.NameColor;
@@ -192,38 +190,9 @@ namespace Dialogue
                         var markup = markupBuilder.ToString();
                         var markupStripped = GetMarkupStripped(markup);
                         
-                        // It would be nice to handle this area better.
-                        if (EvaluateMarkupForEffects(markupStripped, markupShow, animatingBuilder, markup))
-                        {
-                            dialoguePanel.ShowEffectOnActiveDialogue();
-                        }
-                        else if (EvaluateMarkupForEffects(markupStripped, markupHide, animatingBuilder, markup))
-                        {
-                            dialoguePanel.HideEffectOnActiveDialogue();
-                        }
-                        else if (EvaluateMarkupForEffects(markupStripped, markupShake, animatingBuilder, markup))
-                        {
-                            dialoguePanel.ShakeEffectOnActiveDialogue();
-                        }
-                        else if (EvaluateMarkupForEffects(markupStripped, markupWait, animatingBuilder, markup))
-                        {
-                            int milliSeconds = (int)(GetMarkupValueAsFloat(markup) * 1000);
-                            
-                            if (!skip)
-                            {
-                                await TryUniTask(UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token));
-                            }
-                        }
-                        else if (EvaluateMarkupForEffects(markupStripped, markupSpeed, animatingBuilder, markup))
-                        {
-                            textSpeed = GetMarkupValueAsInt(markup);
-                        }
-                        else if (EvaluateMarkupForEffects(markupStripped, markupEmotion, animatingBuilder, markup))
-                        {
-                            Emotions emotion = Enum.Parse<Emotions>(GetMarkupValueAsString(markup).ToUpper());
-                            dialoguePanel.EmotionEffectOnActiveDialogue(currentDialogue.DialogueBlocks[currentIndex], emotion);
-                        }
+                        await TryUniTask(CustomMarkupEffects(markup, markupStripped));
 
+                        animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
                         markupBuilder.Clear();
                     }
                     continue;
@@ -247,42 +216,60 @@ namespace Dialogue
             return strippedMarkup;
         }
 
-        private int GetMarkupValueAsInt(string markup)
+        private T GetMarkupValue<T>(string markup)
         {
             int indexAfterEquals = markup.IndexOf('=') + 1;
             int length = markup.Length - 1 - indexAfterEquals;  
-            var result = markup.Substring(indexAfterEquals, length);
-            return int.Parse(result);
-        }
-        
-        private float GetMarkupValueAsFloat(string markup)
-        {
-            int indexAfterEquals = markup.IndexOf('=') + 1;
-            int length = markup.Length - 1 - indexAfterEquals;  
-            var result = markup.Substring(indexAfterEquals, length);
-            return float.Parse(result);
-        }
-        
-        private string GetMarkupValueAsString(string markup)
-        {
-            int indexAfterEquals = markup.IndexOf('=') + 1;
-            int length = markup.Length - 1 - indexAfterEquals;  
-            return markup.Substring(indexAfterEquals, length);
+            string result = markup.Substring(indexAfterEquals, length);
+            return (T)Convert.ChangeType(result, typeof(T));
         }
 
-        private bool EvaluateMarkupForEffects(string markupStripped, string effectString, StringBuilder stringBuilder,
-            string markupToRemove)
+        private async UniTask CustomMarkupEffects(string markup, string markupStripped)
         {
-            // If true, strip our custom tags from the animatingBuilder as TMP only hides its own tags.
-            if (markupStripped == effectString)
+            switch (markupStripped)
             {
-                stringBuilder.Remove(stringBuilder.Length - markupToRemove.Length, markupToRemove.Length);
-                return true;
+                case markupShow:
+                {
+                    dialoguePanel.ShowEffectOnActiveDialogue();
+                    break;
+                }
+                case markupHide:
+                {
+                    dialoguePanel.HideEffectOnActiveDialogue();
+                    break;
+                }
+                case markupShake:
+                {
+                    dialoguePanel.ShakeEffectOnActiveDialogue();
+                    break;
+                }
+                case markupWait:
+                {
+                    int milliSeconds = (int)(GetMarkupValue<float>(markup) * 1000);
+                            
+                    if (!skip)
+                    {
+                        await TryUniTask(UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token));
+                    }
+                    break;
+                }
+                case markupSpeed:
+                {
+                    textSpeed = GetMarkupValue<int>(markup);
+                    break;
+                }
+                case markupEmotion:
+                {
+                    Emotions emotion = Enum.Parse<Emotions>(GetMarkupValue<string>(markup).ToUpper());
+                    dialoguePanel.EmotionEffectOnActiveDialogue(currentDialogue.DialogueBlocks[currentIndex], emotion);
+                    break;
+                }
             }
-
-            return false;
         }
 
+        /// <summary>
+        /// Try a UniTask only when we want it to be cancellable.
+        /// </summary>
         private async UniTask TryUniTask(UniTask uniTask)
         {
             try
@@ -297,8 +284,6 @@ namespace Dialogue
         
         #endregion Task Handling
         
-        #region Data Handling
-
         private void ResetDialogue()
         {
             currentDialogueHandle.Release();
@@ -306,7 +291,5 @@ namespace Dialogue
             currentState = DialogueState.NONE;
             currentIndex = 0;
         }
-        
-        #endregion
     }
 }
