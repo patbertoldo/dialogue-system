@@ -189,10 +189,15 @@ namespace Dialogue
 
                         var markup = markupBuilder.ToString();
                         var markupStripped = GetMarkupStripped(markup);
-                        
-                        await TryUniTask(CustomMarkupEffects(markup, markupStripped));
 
-                        animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+                        UniTask<bool> customMarkupTask = TryUniTask(CustomMarkupEffects(markup, markupStripped));
+                        await customMarkupTask;
+                        
+                        // Only remove custom markup, leave Text Mesh Pro markup.
+                        bool isCustomMarkup = customMarkupTask.GetAwaiter().GetResult();
+                        if (isCustomMarkup)
+                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
+                                
                         markupBuilder.Clear();
                     }
                     continue;
@@ -224,7 +229,7 @@ namespace Dialogue
             return (T)Convert.ChangeType(result, typeof(T));
         }
 
-        private async UniTask CustomMarkupEffects(string markup, string markupStripped)
+        private async UniTask<bool> CustomMarkupEffects(string markup, string markupStripped)
         {
             switch (markupStripped)
             {
@@ -264,7 +269,13 @@ namespace Dialogue
                     dialoguePanel.EmotionEffectOnActiveDialogue(currentDialogue.DialogueBlocks[currentIndex], emotion);
                     break;
                 }
+                default:
+                {
+                    return false;
+                }
             }
+
+            return true;
         }
 
         /// <summary>
@@ -279,6 +290,19 @@ namespace Dialogue
             catch (Exception e)
             {
                 // Ignore, cancellations are expected when the player skips.
+            }
+        }
+        
+        private async UniTask<bool> TryUniTask(UniTask<bool> uniTask)
+        {
+            try
+            {
+                return await uniTask;
+            }
+            catch (Exception e)
+            {
+                // Ignore, cancellations are expected when the player skips.
+                return false;
             }
         }
         
