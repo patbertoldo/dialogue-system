@@ -13,25 +13,25 @@ MonoBehaviour:
   m_Name: 5_ShowAndHide
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 0
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: There's the Show and Hide feature. Watch me disappear!                                                  
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: There's the Show and Hide feature. Watch me disappear!                                                  
       <hide>
-    textSpeed: 20
-  - alignment: 1
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: That was quick! Let me try...                                                  
+    TextSpeed: 20
+  - Alignment: 1
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
+    Description: That was quick! Let me try...                                                  
       <hide>
-    textSpeed: 20
-  - alignment: 0
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <show>Ta-da!
-    textSpeed: 20
-  - alignment: 0
-    emotion: 2
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Wait, where did you go?
-    textSpeed: 20
+    TextSpeed: 20
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: <show>Ta-da!
+    TextSpeed: 20
+  - Alignment: 0
+    Emotion: 2
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Wait, where did you go?
+    TextSpeed: 20

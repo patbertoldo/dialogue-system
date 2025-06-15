@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: 1_Intro
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 0
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey!
-  - alignment: 0
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: This is my first time writing a dialogue system from scratch.
-  - alignment: 0
-    emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Let's see if it's... up to scratch!
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Hey!
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: This is my first time writing a dialogue system from scratch.
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Let's see if it's... up to scratch!

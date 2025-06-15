@@ -14,19 +14,13 @@ namespace Dialogue
     [Serializable]
     public class DialogueBlock
     {
-        [SerializeField] private DialogueAlignment alignment;
-        [SerializeField] private Emotions emotion;
-        [SerializeField] private DialogueCharacterScriptableObject dialogueCharacter;
+        public DialogueAlignment Alignment;
+        public Emotions Emotion;
+        public DialogueCharacterScriptableObject DialogueCharacter;
         [TextArea(3, 10)]
-        [SerializeField] private string description;
+        public string Description;
         [Tooltip("The speed at which the text appears, in milliseconds. 20 is roughly normal speed. Lower is faster.")]
         [Range(1, 200)]
-        [SerializeField] private int textSpeed = 20;
-        
-        public DialogueAlignment Alignment => alignment;
-        public Emotions Emotion => emotion;
-        public DialogueCharacterScriptableObject DialogueCharacter => dialogueCharacter;
-        public string Description => description;
-        public int TextSpeed => textSpeed;
+        public int TextSpeed = 20;
     }
 }

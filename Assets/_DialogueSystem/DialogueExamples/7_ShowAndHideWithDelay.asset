@@ -13,29 +13,29 @@ MonoBehaviour:
   m_Name: 7_ShowAndHideWithDelay
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 0
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: So with the first Show and Hide example, I had to put a lot of spaces
-      to create a fake delay while the program awaited each space.
-    textSpeed: 20
-  - alignment: 1
-    emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: Mhm.
-    textSpeed: 20
-  - alignment: 0
-    emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Now this example uses a markup delay before hiding. Bye!<wait=2><hide>
-    textSpeed: 20
-  - alignment: 0
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <show>Aaaand I'm back.
-    textSpeed: 20
-  - alignment: 1
-    emotion: 1
-    dialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
-    description: <i>Nicuuu.
-    textSpeed: 20
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: So with the first Show and Hide example, I had to put a lot of spaces
+     to create a fake delay while the program awaited each space.
+    TextSpeed: 20
+  - Alignment: 1
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
+    Description: Mhm.
+    TextSpeed: 20
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Now this example uses a markup delay before hiding. Bye!<wait=2><hide>
+    TextSpeed: 20
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: <show>Aaaand I'm back.
+    TextSpeed: 20
+  - Alignment: 1
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
+    Description: <i>Nicuuu.
+    TextSpeed: 20

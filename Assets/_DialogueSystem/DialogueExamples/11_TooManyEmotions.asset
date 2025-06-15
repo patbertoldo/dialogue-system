@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: 11_TooManyEmotions
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 0
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <emotion=sad><emotion=happy><emotion=angry><emotion=default>Just
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: <emotion=sad><emotion=happy><emotion=angry><emotion=default>Just
       going to play<emotion=thinking> lots of emotion changes at once<emotion=happy>
       and see what happens.
-    textSpeed: 10
-  - alignment: 0
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Seems to handle it well.
-    textSpeed: 20
+    TextSpeed: 10
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Seems to handle it well.
+    TextSpeed: 20

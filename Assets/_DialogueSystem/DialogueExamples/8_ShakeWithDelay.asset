@@ -13,26 +13,26 @@ MonoBehaviour:
   m_Name: 8_ShakeWithDelay
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 0
-    emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey Lisa, why are you so angry all the time?
-    textSpeed: 20
-  - alignment: 1
-    emotion: 3
-    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
-    description: Because <shake><wait=1>I've been waiting <shake><wait=1>for you
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Hey Lisa, why are you so angry all the time?
+    TextSpeed: 20
+  - Alignment: 1
+    Emotion: 3
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Because <shake><wait=1>I've been waiting <shake><wait=1>for you
       to finish <shake><wait=1>this project <shake><wait=1>for over <shake><wait=1>a
       week!! <shake><wait=1><shake><wait=1><shake><wait=1>
-    textSpeed: 20
-  - alignment: 0
-    emotion: 2
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: I'm sorry. <wait=1>I got COVID last weekend. <wait=1>That was not
+    TextSpeed: 20
+  - Alignment: 0
+    Emotion: 2
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: I'm sorry. <wait=1>I got COVID last weekend. <wait=1>That was not
       so fun.
-    textSpeed: 20
-  - alignment: 0
-    emotion: 2
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: <shake>I missed Christmas!
-    textSpeed: 20
+    TextSpeed: 20
+  - Alignment: 0
+    Emotion: 2
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: <shake>I missed Christmas!
+    TextSpeed: 20

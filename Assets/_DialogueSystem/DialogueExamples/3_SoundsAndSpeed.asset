@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: 3_SoundsAndSpeed
   m_EditorClassIdentifier: 
   dialogueBlocks:
-  - alignment: 1
-    emotion: 0
-    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
-    description: Hey hey make sure add <b>sounds!</b>
-    textSpeed: 20
-  - alignment: 1
-    emotion: 3
-    dialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
-    description: Or else I'll get angry! You gotta have sounds! Ahh!
-    textSpeed: 5
-  - alignment: 0
-    emotion: 4
-    dialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    description: Hey, slow down there!
-    textSpeed: 100
+  - Alignment: 1
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Hey hey make sure add <b>sounds!</b>
+    TextSpeed: 20
+  - Alignment: 1
+    Emotion: 3
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Or else I'll get angry! You gotta have sounds! Ahh!
+    TextSpeed: 5
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Hey, slow down there!
+    TextSpeed: 100
