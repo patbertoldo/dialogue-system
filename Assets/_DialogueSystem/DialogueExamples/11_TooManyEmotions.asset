@@ -20,8 +20,33 @@ MonoBehaviour:
       going to play<emotion=thinking> lots of emotion changes at once<emotion=happy>
       and see what happens.
     TextSpeed: 10
+    CommandDatas:
+    - Name: emotion
+      Value: sad
+    - Name: emotion
+      Value: happy
+    - Name: emotion
+      Value: angry
+    - Name: emotion
+      Value: default
+    - Name: playText
+      Value: 17
+    - Name: emotion
+      Value: thinking
+    - Name: playText
+      Value: 49
+    - Name: emotion
+      Value: happy
+    - Name: playText
+      Value: 71
+    DescriptionSanitized: Just going to play lots of emotion changes at once and
+      see what happens.
   - Alignment: 0
     Emotion: 0
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: Seems to handle it well.
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 23
+    DescriptionSanitized: Seems to handle it well.

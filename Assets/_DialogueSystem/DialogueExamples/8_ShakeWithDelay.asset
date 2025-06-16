@@ -18,21 +18,90 @@ MonoBehaviour:
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: Hey Lisa, why are you so angry all the time?
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 43
+    DescriptionSanitized: Hey Lisa, why are you so angry all the time?
   - Alignment: 1
     Emotion: 3
     DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
-    Description: Because <shake><wait=1>I've been waiting <shake><wait=1>for you
-      to finish <shake><wait=1>this project <shake><wait=1>for over <shake><wait=1>a
-      week!! <shake><wait=1><shake><wait=1><shake><wait=1>
+    Description: Because <shake=0.75><wait=1>I've been waiting <shake=0.75><wait=1>for
+      you to finish <shake=0.75><wait=1>this project <shake=0.75><wait=1>for over
+      <shake=0.75><wait=1>a week!! <shake=0.75><wait=1><shake=0.75><wait=1><shake=0.75><wait=1>
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 7
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 25
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 43
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 56
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 65
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 74
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    - Name: shake
+      Value: 0.75
+    - Name: wait
+      Value: 1
+    DescriptionSanitized: 'Because I''ve been waiting for you to finish this project
+      for over a week!! '
   - Alignment: 0
     Emotion: 2
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: I'm sorry. <wait=1>I got COVID last weekend. <wait=1>That was not
       so fun.
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 10
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 36
+    - Name: wait
+      Value: 1
+    - Name: playText
+      Value: 56
+    DescriptionSanitized: I'm sorry. I got COVID last weekend. That was not so fun.
   - Alignment: 0
     Emotion: 2
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    Description: <shake>I missed Christmas!
+    Description: <shake=0.75>I missed Christmas!
     TextSpeed: 20
+    CommandDatas:
+    - Name: shake
+      Value: 0.75
+    - Name: playText
+      Value: 18
+    DescriptionSanitized: I missed Christmas!

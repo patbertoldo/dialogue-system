@@ -17,11 +17,26 @@ MonoBehaviour:
     Emotion: 1
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: Hey!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 3
+    DescriptionSanitized: Hey!
   - Alignment: 0
     Emotion: 0
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: This is my first time writing a dialogue system from scratch.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 60
+    DescriptionSanitized: This is my first time writing a dialogue system from scratch.
   - Alignment: 0
     Emotion: 4
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: Let's see if it's... up to scratch!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 34
+    DescriptionSanitized: Let's see if it's... up to scratch!

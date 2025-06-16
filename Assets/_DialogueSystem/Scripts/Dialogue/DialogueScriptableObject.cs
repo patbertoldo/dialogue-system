@@ -11,6 +11,15 @@ namespace Dialogue
 
         public DialogueBlock[] DialogueBlocks => dialogueBlocks;
 
+        public void BuildDialogueCommandData()
+        {
+            foreach (var dialogueBlock in DialogueBlocks)
+            {
+                Debug.Log($"Build command data for {dialogueBlock}");
+                dialogueBlock.BuildCommandData();
+            }
+        }
+
         public DialogueBlock GetFirstInstanceOfAlignment(DialogueAlignment alignment)
         {
             foreach (var dialogueBlock in dialogueBlocks)

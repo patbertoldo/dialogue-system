@@ -8,6 +8,7 @@ namespace Dialogue.Editor
     [CustomEditor(typeof(DialogueScriptableObject))]
     public class DialogueScriptableObjectEditor : UnityEditor.Editor
     {
+        private const string buildCommandDatas = "Build Dialogue Command Data";
         private const string buttonText = "Test In Play Mode";
         private const string urlButtonText = "See Supported Text Colors";
 
@@ -16,7 +17,13 @@ namespace Dialogue.Editor
         
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            var dialogueScriptableObject = (DialogueScriptableObject)target;
+
+            if (GUILayout.Button(buildCommandDatas))
+            {
+                dialogueScriptableObject.BuildDialogueCommandData();
+                EditorUtility.SetDirty(dialogueScriptableObject);
+            }
 
             if (GUILayout.Button(buttonText))
             {
@@ -41,6 +48,8 @@ namespace Dialogue.Editor
             {
                 Application.OpenURL(textMeshProURL);
             }
+            
+            DrawDefaultInspector();
         }
     }
 }

@@ -18,13 +18,25 @@ MonoBehaviour:
     DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
     Description: Hey hey make sure add <b>sounds!</b>
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 35
+    DescriptionSanitized: Hey hey make sure add <b>sounds!</b>
   - Alignment: 1
     Emotion: 3
     DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
     Description: Or else I'll get angry! You gotta have sounds! Ahh!
     TextSpeed: 5
+    CommandDatas:
+    - Name: playText
+      Value: 50
+    DescriptionSanitized: Or else I'll get angry! You gotta have sounds! Ahh!
   - Alignment: 0
     Emotion: 4
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: Hey, slow down there!
     TextSpeed: 100
+    CommandDatas:
+    - Name: playText
+      Value: 20
+    DescriptionSanitized: Hey, slow down there!

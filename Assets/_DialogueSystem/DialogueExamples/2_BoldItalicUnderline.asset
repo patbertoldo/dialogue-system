@@ -18,23 +18,43 @@ MonoBehaviour:
     DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     Description: Hey Patrick!
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 11
+    DescriptionSanitized: Hey Patrick!
   - Alignment: 0
     Emotion: 4
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: Hey Henry! Can you speak in <i>italics?
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 38
+    DescriptionSanitized: Hey Henry! Can you speak in <i>italics?
   - Alignment: 1
     Emotion: 1
     DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     Description: No, but I can speak in <b>bold.
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 30
+    DescriptionSanitized: No, but I can speak in <b>bold.
   - Alignment: 0
     Emotion: 0
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: <u>Touche!
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 9
+    DescriptionSanitized: <u>Touche!
   - Alignment: 1
     Emotion: 1
     DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     Description: <u><b><i>Touche!
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 15
+    DescriptionSanitized: <u><b><i>Touche!

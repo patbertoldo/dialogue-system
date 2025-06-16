@@ -17,25 +17,52 @@ MonoBehaviour:
     Emotion: 0
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
     Description: So with the first Show and Hide example, I had to put a lot of spaces
-     to create a fake delay while the program awaited each space.
+      to create a fake delay while the program awaited each space.
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 129
+    DescriptionSanitized: So with the first Show and Hide example, I had to put a
+      lot of spaces to create a fake delay while the program awaited each space.
   - Alignment: 1
     Emotion: 4
     DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     Description: Mhm.
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 3
+    DescriptionSanitized: Mhm.
   - Alignment: 0
     Emotion: 4
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    Description: Now this example uses a markup delay before hiding. Bye!<wait=2><hide>
+    Description: Now this example uses a markup delay before hiding. Bye!<wait=2><hide=0.5>
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 55
+    - Name: wait
+      Value: 2
+    - Name: hide
+      Value: 0.5
+    DescriptionSanitized: Now this example uses a markup delay before hiding. Bye!
   - Alignment: 0
     Emotion: 0
     DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
-    Description: <show>Aaaand I'm back.
+    Description: <show=0.5>Aaaand I'm back.
     TextSpeed: 20
+    CommandDatas:
+    - Name: show
+      Value: 0.5
+    - Name: playText
+      Value: 15
+    DescriptionSanitized: Aaaand I'm back.
   - Alignment: 1
     Emotion: 1
     DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
     Description: <i>Nicuuu.
     TextSpeed: 20
+    CommandDatas:
+    - Name: playText
+      Value: 9
+    DescriptionSanitized: <i>Nicuuu.
