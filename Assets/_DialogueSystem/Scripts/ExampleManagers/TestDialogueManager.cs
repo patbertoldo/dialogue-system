@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Serialization;
 
 namespace Dialogue
 {
@@ -16,16 +18,23 @@ namespace Dialogue
         [SerializeField] private TriggerPanel triggerPanel;
         [SerializeField] private DialoguePanel dialoguePanel;
         
-        [SerializeField] private DialogueScriptableObjectAssetReference[] dialogueAddressables;
+        [SerializeField] private DialogueDatabase dialogueDatabase;
+        [SerializeField] private DialogueCommandDatabase dialogueCommandDatabase;
         
         private TriggerManager triggerManager;
         private DialogueManager dialogueManager;
         
         private void Awake()
         {
+            // Load databases
+            dialogueCommandDatabase.LoadAsync().Forget();
+            
+            // Leave loading the dialogue scriptables to load individually when then player selects them.
+            //dialogueDatabase.LoadAsync();
+            
             // Managers
-            triggerManager = new TriggerManager(dialogueAddressables, triggerPanel);
-            dialogueManager = new DialogueManager(dialoguePanel);
+            triggerManager = new TriggerManager(dialogueDatabase.AddressableDatabase, triggerPanel);
+            dialogueManager = new DialogueManager(dialoguePanel, dialogueCommandDatabase);
             
             // Actions
             triggerManager.ShowTriggers(OnTriggerDialogueByName);
@@ -35,7 +44,7 @@ namespace Dialogue
 
         public void OnTriggerDialogueByName(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
-            dialogueManager.OpenDialogue(dialogueAddressable);
+            dialogueManager.LoadDialogue(dialogueAddressable);
         }
         
         #endregion

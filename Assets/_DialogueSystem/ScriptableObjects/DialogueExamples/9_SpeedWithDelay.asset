@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 9_SpeedWithDelay
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Lisa, <Wait_Medium>just <Default_Slow>breath. <Default> Nice deep
+      breaths. <Wait_Medium> Maybe try counting too.
+    TextSpeed: 42
+    CommandDatas:
+    - Name: Default
+      Value: 5
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 10
+    - Name: Default_Slow
+      Value: 
+    - Name: Default
+      Value: 18
+    - Name: Default
+      Value: 
+    - Name: Default
+      Value: 38
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 62
+    DescriptionSanitized: Lisa, just breath.  Nice deep breaths.  Maybe try counting
+      too.
+  - Alignment: 1
+    Emotion: 3
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Okay, let me try.<Default_Slow><Wait_Medium> 1... <Wait_Medium>2...
+      <Wait_Medium>3...
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 16
+    - Name: Default_Slow
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 22
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 27
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 31
+    DescriptionSanitized: Okay, let me try. 1... 2... 3...
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Hey how does that feel?
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 22
+    DescriptionSanitized: Hey how does that feel?
+  - Alignment: 1
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: <Default_SemiSlow>Ummmm.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default_SemiSlow
+      Value: 
+    - Name: Default
+      Value: 5
+    DescriptionSanitized: Ummmm.
+  - Alignment: 1
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Pretty good!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 11
+    DescriptionSanitized: Pretty good!

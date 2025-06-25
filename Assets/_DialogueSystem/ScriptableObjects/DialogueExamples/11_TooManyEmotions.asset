@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 11_TooManyEmotions
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: <Emotion_Sad><Emotion_Happy><Emotion_Angry><Emotion_Default>Just
+      going to play<Emotion_Thinking> lots of emotion changes at once<Emotion_Happy>
+      and see what happens.
+    TextSpeed: 10
+    CommandDatas:
+    - Name: Emotion_Sad
+      Value: 
+    - Name: Emotion_Happy
+      Value: 
+    - Name: Emotion_Angry
+      Value: 
+    - Name: Emotion_Default
+      Value: 
+    - Name: Default
+      Value: 17
+    - Name: Emotion_Thinking
+      Value: 
+    - Name: Default
+      Value: 49
+    - Name: Emotion_Happy
+      Value: 
+    - Name: Default
+      Value: 71
+    DescriptionSanitized: Just going to play lots of emotion changes at once and
+      see what happens.
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Seems to handle it well.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 23
+    DescriptionSanitized: Seems to handle it well.

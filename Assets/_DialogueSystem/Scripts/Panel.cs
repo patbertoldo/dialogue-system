@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -13,22 +14,22 @@ namespace Dialogue
         private const float fadeOut = 0f;
         private const float fadeTime = 0.15f;
         
-        public virtual void Show()
+        public virtual async UniTask Show()
         {
             gameObject.SetActive(true);
             
             if (canvasGroup)
             {
                 canvasGroup.alpha = 0f;
-                canvasGroup.DOFade(fadeIn, fadeTime);
+                await canvasGroup.DOFade(fadeIn, fadeTime);
             }
         }
 
-        public virtual void Hide()
+        public virtual async UniTask Hide()
         {
             if (canvasGroup)
             {
-                canvasGroup.DOFade(fadeOut, fadeTime)
+                await canvasGroup.DOFade(fadeOut, fadeTime)
                     .OnComplete(() => gameObject.SetActive(false));
             }
             else

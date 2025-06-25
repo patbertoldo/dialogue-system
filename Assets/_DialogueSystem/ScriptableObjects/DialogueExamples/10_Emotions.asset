@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 10_Emotions
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: 'Emotions are tied together by two properties:
+
+      <b>a)</b>
+      The character portrait and
+
+      <b>b)</b> The sound at the start of the dialogue.'
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 131
+    DescriptionSanitized: 'Emotions are tied together by two properties:
+
+      <b>a)</b>
+      The character portrait and
+
+      <b>b)</b> The sound at the start of the dialogue.'
+  - Alignment: 1
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Are you saying that I can change my emotion mid dialogue?
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 56
+    DescriptionSanitized: Are you saying that I can change my emotion mid dialogue?
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Well, not only that! When an emotion changes, both properties are
+      played.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 72
+    DescriptionSanitized: Well, not only that! When an emotion changes, both properties
+      are played.
+  - Alignment: 1
+    Emotion: 3
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Wouldn't it be better to<Default_SemiSlow>... <Emotion_Thinking><Wait_Medium><Default>make
+      those separate?
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 23
+    - Name: Default_SemiSlow
+      Value: 
+    - Name: Default
+      Value: 27
+    - Name: Emotion_Thinking
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 
+    - Name: Default
+      Value: 47
+    DescriptionSanitized: Wouldn't it be better to... make those separate?
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Nah. <Wait_Medium>It makes more sense that you always have one with
+      the other.<Wait_Medium><Emotion_Thinking> We could maybe add other sounds for
+      stuff that's not emotion based! <Wait_Medium> Let's not overscope for now.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 4
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 64
+    - Name: Wait_Medium
+      Value: 
+    - Name: Emotion_Thinking
+      Value: 
+    - Name: Default
+      Value: 133
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 162
+    DescriptionSanitized: Nah. It makes more sense that you always have one with
+      the other. We could maybe add other sounds for stuff that's not emotion based! 
+      Let's not overscope for now.

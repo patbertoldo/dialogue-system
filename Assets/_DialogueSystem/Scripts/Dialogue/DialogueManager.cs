@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Dialogue
@@ -14,7 +16,7 @@ namespace Dialogue
     public enum DialogueState
     {
         NONE,           // When text and tasks are started.
-        PLAY,           // When text is in an animating state.
+        PLAYING,        // When commands are executing.
         SKIPPED,        // When in player input force finishes the text animation.
         FINISHED        // When text has finished animating.
     }
@@ -23,11 +25,33 @@ namespace Dialogue
     {
         // References
         private DialoguePanel dialoguePanel;
+        private DialogueCommandDatabase dialogueCommandDatabase;
         
         // States
         private DialogueScriptableObject currentDialogue;
         private DialogueState currentState;
         private int currentIndex;
+        
+        // Commands
+        private DialogueCommandManager dialogueCommandManager;
+
+        private Dictionary<string, Type> kvpDialogueCommands =
+            new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
+            {
+                //{ DefaultCommand.TypeName,typeof(DefaultCommand) },
+                //{ ShowCommand.TypeName, typeof(ShowCommand) },
+                //{ HideCommand.TypeName, typeof(HideCommand) },
+                // { "playText", typeof(DefaultCommand) },
+                // { "playText", typeof(DefaultCommand) },
+                // { "playText", typeof(DefaultCommand) },
+                // { "playText", typeof(DefaultCommand) },
+            };
+        // private Dictionary<string, IDialogueCommand> kvpDialogueCommands = new Dictionary<string, IDialogueCommand>(StringComparer.OrdinalIgnoreCase)
+        // {
+        //     { "playText", }
+        // }
+        // Where the outer list represents individual DialogueBlocks, the inner list is the commands for that block.
+        private List<List<DialogueCommand>> dialogueBlockCommandLists = new ();
         
         // Tasks
         private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
@@ -46,14 +70,32 @@ namespace Dialogue
         private const string markupWait = "wait";
         private const string markupSpeed = "speed";
         private const string markupEmotion = "emotion";
+
+        // TODO: Convert this to a globals list that's generated from a scriptable
+        public static List<string> GetCustomMarkupNames()
+        {
+            return new List<string>()
+            {
+                markupShow,
+                markupHide,
+                markupShake,
+                markupWait,
+                markupSpeed,
+                markupEmotion
+            };
+        }
         
-        public DialogueManager(DialoguePanel dialoguePanel)
+        public DialogueManager(DialoguePanel dialoguePanel, DialogueCommandDatabase dialogueCommandDatabase)
         {
             this.dialoguePanel = dialoguePanel;
+            this.dialogueCommandDatabase = dialogueCommandDatabase;
 
             currentDialogue = null;
             currentState = DialogueState.NONE;
             currentIndex = 0;
+
+            dialogueCommandManager = new DialogueCommandManager();
+            
             
             animatingBuilder = new StringBuilder();
             markupBuilder = new StringBuilder();
@@ -65,16 +107,40 @@ namespace Dialogue
 
         #region Dialogue Handling
         
-        public async void OpenDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
+        public void LoadDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
+            LoadDialogueAsync(dialogueAddressable);
+        }
+
+        private async UniTask LoadDialogueAsync(DialogueScriptableObjectAssetReference dialogueAddressable)
+        {
+            // Load Addressable
             currentDialogueHandle = Addressables.LoadAssetAsync<DialogueScriptableObject>(dialogueAddressable);
             currentDialogue = await currentDialogueHandle;
             
-            dialoguePanel.Show();
+            // Load Commands
+            dialogueBlockCommandLists.Clear();
 
-            await UniTask.Delay(100);
+            foreach (var db in currentDialogue.DialogueBlocks)
+            {
+                var dialogueContainer = dialoguePanel.GetDialogueContainer(DialogueContainerState.OFF);
+                
+                //List<IDialogueCommand> dbCommands = new();
+
+                // var newCommandType = kvpDialogueCommands["playText"];
+                // var newCommand = new newCommandType()
+                
+                //dbCommands.Add(new ShowCommand(dialogueContainer));
+                //dbCommands.Add(new DefaultCommand(dialogueContainer, 0, 3, 1f));
+                //dbCommands.Add(new HideCommand(dialogueContainer));
+                
+                //dialogueBlockCommandLists.Add(dbCommands);
+            }
             
-            PlayDialogue();
+            // Show Dialogue Panel
+            await dialoguePanel.Show();
+            
+            await PlayDialogue();
         }
 
         /// <summary>
@@ -84,7 +150,7 @@ namespace Dialogue
         {
             switch (currentState)
             {
-                case DialogueState.PLAY:
+                case DialogueState.PLAYING:
                 {
                     skip = true;
                     animationCancellation.Cancel();
@@ -99,29 +165,40 @@ namespace Dialogue
             }
         }
 
-        private async void PlayDialogue()
+        private async UniTask PlayDialogue()
         {
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
 
-            currentState = DialogueState.PLAY;
+            
+            foreach (var dbCommands in dialogueBlockCommandLists[currentIndex])
+            {
+                await dbCommands.Execute();
+            }
+
+            currentState = DialogueState.PLAYING;
             textSpeed = dialogueBlock.TextSpeed;
             skip = false;
             // Each new dialogue needs a new cancellation token. It doesn't seem like tokens that have been
             // cancelled can be recycled.
             animationCancellation = new CancellationTokenSource();
+            
+            //dialogueCommandManager.BuildCommands(dialogueBlock.Description);
 
-            bool isSameCharacter = false;
+
+            bool isSameDialogueCharacter = false;
             if (currentIndex > 0)
             {
-                isSameCharacter = dialogueBlock.DialogueCharacter ==
+                isSameDialogueCharacter = dialogueBlock.DialogueCharacter ==
                                   currentDialogue.DialogueBlocks[currentIndex - 1].DialogueCharacter;
             }
             
-            dialoguePanel.PlayDialogue(dialogueBlock);
-            
-            await BuildDialogueText(dialogueBlock, isSameCharacter);
+            //dialoguePanel.ConfigureDialogue(dialogueBlock);
 
-            dialoguePanel.SetCompletedOnActiveDialogue();
+            //dialogueCommandManager.PlayCommands();
+            
+            //await BuildDialogueText(dialogueBlock, isSameDialogueCharacter);
+
+            //dialoguePanel.SetCompletedOnActiveDialogue();
             
             currentState = DialogueState.FINISHED;
         }
@@ -163,7 +240,7 @@ namespace Dialogue
             var name = dialogueBlock.DialogueCharacter.Name;
             var nameColor = dialogueBlock.DialogueCharacter.NameColor;
             
-            // When it's a new character, add their name to the start of the text. Add bold and color.
+            // When it's a new dialogue character, add their name to the start of the text. Add bold and color.
             if (!isSameCharacter)
                 animatingBuilder.Append($"<b><color={nameColor}>{name}:</color></b> ");
             

@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 8_ShakeWithDelay
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Hey Lisa, why are you so angry all the time?
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 43
+    DescriptionSanitized: Hey Lisa, why are you so angry all the time?
+  - Alignment: 1
+    Emotion: 3
+    DialogueCharacter: {fileID: 11400000, guid: af8ec95ad12565a43a2d2093a0df8efc, type: 2}
+    Description: Because <Shake_Small><Wait_Medium>I've been waiting <Shake_Small><Wait_Medium>for
+      you to finish <Shake_Small><Wait_Medium>this project <Shake_Small><Wait_Medium>for
+      over <Shake_Small><Wait_Medium>a week!! <Shake_Small><Wait_Medium><Shake_Small><Wait_Medium><Shake_Small><Wait_Medium>
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 7
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 25
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 43
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 56
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 65
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 74
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    - Name: Shake_Small
+      Value: 
+    - Name: Wait_Medium
+      Value: 
+    DescriptionSanitized: 'Because I''ve been waiting for you to finish this project
+      for over a week!! '
+  - Alignment: 0
+    Emotion: 2
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: I'm sorry. <Wait_Medium>I got COVID last weekend. <Wait_Medium>That
+      was not so fun.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 10
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 36
+    - Name: Wait_Medium
+      Value: 
+    - Name: Default
+      Value: 56
+    DescriptionSanitized: I'm sorry. I got COVID last weekend. That was not so fun.
+  - Alignment: 0
+    Emotion: 2
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: <Shake_Small>I missed Christmas!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Shake_Small
+      Value: 
+    - Name: Default
+      Value: 18
+    DescriptionSanitized: I missed Christmas!

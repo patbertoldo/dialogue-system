@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: DialogueGroup
   m_EditorClassIdentifier: 
   m_GroupName: DialogueGroup
-  m_Data:
-    m_SerializedData: []
   m_GUID: 0432eb392c5685143adef1402d10fd85
   m_SerializeEntries:
   - m_GUID: 0319612ecede25e4f91239ad7701e73f
@@ -29,17 +27,42 @@ MonoBehaviour:
     m_SerializedLabels:
     - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ffcc8357180f8d449794fc66fbc4ccf
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Emotion_Happy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 109c5a66b28bf5b41afdd11648455a95
     m_Address: Assets/_DialogueSystem/DialogueExamples/2_BoldItalicUnderline.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18bc69f6d7f2e43408e9825411bbd4fd
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Emotion_Angry.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1f348b0dd1a11ea44ad0dbf500631d3e
     m_Address: Assets/_DialogueSystem/AudioClips/Default.ogg
     m_ReadOnly: 0
     m_SerializedLabels:
     - DialogueShared
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37354aa6ac357f9429544159300a2c00
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Shake_Small.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39816ba936f71434fa18dea03330434b
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Emotion_Thinking.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46bd382c9eca21343a4a3d2afb017af1
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Wait_Medium.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4da51fe1357d4f348a04c2092a92476f
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Henry.asset
@@ -53,11 +76,21 @@ MonoBehaviour:
     m_SerializedLabels:
     - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e534e57f68363042b32b118a8c5c6d0
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Wait_Short.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 62792cbd6d621a24caba5cf24d253b54
     m_Address: Assets/_DialogueSystem/DialogueExamples/11_TooManyEmotions.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6dbd3756cbcdab44e911fc2a02bd6c30
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Hide.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 732633cda027468488b8f777e678e979
     m_Address: Assets/_DialogueSystem/DialogueCharacters/Patrick.asset
@@ -71,17 +104,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78be79206781ba046b61d180fa1b8322
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Default_Slow.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 893ed9334da69084d9ade08f0b0914ec
     m_Address: Assets/_DialogueSystem/DialogueExamples/7_ShowAndHideWithDelay.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ef6667d7a0f8e841a004cb65447132d
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Emotion_Default.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a036dac533f66604b8f9909376ac652c
     m_Address: Assets/_DialogueSystem/DialogueExamples/6_Pausing.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2a5bac77a05d374ea1c142e5d5f285e
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Default.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a450f4333bbcb964ea5fb18b2c25662f
     m_Address: Assets/_DialogueSystem/Sprites/PortraitGreyboxing/DialoguePortrait_Thinking.png
@@ -107,17 +155,37 @@ MonoBehaviour:
     m_SerializedLabels:
     - DialogueCharacter
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b273d3452d903db4e81b109f04d826e4
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/_Database.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7be7891db3d4da4a983042cab476807
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Wait_Long.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9ade429025d50747b9ca0d5866589be
     m_Address: Assets/_DialogueSystem/DialogueExamples/3_DialogueWithLisa.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb387fd95b3a738429931afeb280ab31
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Default_Fast.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bc391651abf3f054794bc7df1def0df8
     m_Address: Assets/_DialogueSystem/DialogueExamples/1_Intro.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Dialogue
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3498c23c44529d4d951d7dd6ed990f0
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Shake_Big.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c36238d27d075ae489d150b0795b8385
     m_Address: Assets/_DialogueSystem/DialogueExamples/4_Colours.asset
@@ -137,6 +205,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - DialogueShared
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dce2d8837774e0a4eb9c35e0f5ea6b7d
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Show.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e00f50400d3bad546a6f09f200dfc9bc
     m_Address: Assets/_DialogueSystem/AudioClips/Angry.ogg
     m_ReadOnly: 0
@@ -155,11 +228,21 @@ MonoBehaviour:
     m_SerializedLabels:
     - Dialogue
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eac7162e17b83cd42a75dacb03ab0508
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Emotion_Sad.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f0001702aafc59941bf55b530ffa7e73
     m_Address: Assets/_DialogueSystem/AudioClips/Thinking.ogg
     m_ReadOnly: 0
     m_SerializedLabels:
     - DialogueShared
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: faa11194118212043a23633e7ef56db6
+    m_Address: Assets/_DialogueSystem/ScriptableObjects/DialogueCommands/Default_SemiSlow.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 87e23100c0548be4886b622637008b1e, type: 2}

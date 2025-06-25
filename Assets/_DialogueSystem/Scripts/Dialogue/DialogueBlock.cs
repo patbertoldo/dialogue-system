@@ -27,7 +27,7 @@ namespace Dialogue
         [TextArea(3, 10)]
         public string DescriptionSanitized;
 
-        public void BuildCommandData()
+        public void BuildCommandData(DialogueCommandDatabase commandDatabase)
         {
             // Create command data for every part of the Description text.
             CommandDatas.Clear();
@@ -58,13 +58,6 @@ namespace Dialogue
                     markupBuilder.Append(character);
 
                     indexBeforeMarkup = charIndex - 1;
-                   
-                    // // Did we parse through text that we can play?
-                    // if (charIndex > 0 && lastCustomMarkupEndIndex != charIndex - 1)
-                    // {
-                    //     // Remove 2 from the builder: 1 for the '<' and 1 for the end of the array.
-                    //     CommandDatas.Add(new CommandData("playText", (sanitizedBuilder.Length - 2).ToString()));
-                    // }
                     
                     continue;
                 }
@@ -82,7 +75,8 @@ namespace Dialogue
                         var markupStripped = GetMarkupStripped(markupBuilderString);
                         var markupValue = GetMarkupValue(markupBuilderString);
 
-                        if (DialogueManager.GetCustomMarkupNames().Contains(markupStripped))
+                        if (commandDatabase.HasAddressableOfName(markupStripped))
+                        //if (DialogueManager.GetCustomMarkupNames().Contains(markupStripped))
                         {   
                             lastCustomMarkupEndIndex = charIndex;
 
@@ -92,10 +86,10 @@ namespace Dialogue
                             // If the index before the markup wasn't the end of another markup, we have text to play.
                             if (indexBeforeMarkup != -1 && charArray[indexBeforeMarkup] != '>')
                             {
-                                CommandDatas.Add(new CommandData("playText", (sanitizedBuilder.Length - 1).ToString()));
+                                AddCommandData("Default", (sanitizedBuilder.Length - 1).ToString());
                             }
 
-                            CommandDatas.Add(new CommandData(markupStripped, markupValue));
+                            AddCommandData(markupStripped, markupValue);
                         }
                         
                         markupBuilder.Clear();
@@ -106,9 +100,16 @@ namespace Dialogue
             // If there were no markups or
             // If the last character wasn't a markup.
             if (CommandDatas.Count == 0 || lastCustomMarkupEndIndex < charArray.Length - 1)
-                CommandDatas.Add(new CommandData("playText", (sanitizedBuilder.Length - 1).ToString()));
+                AddCommandData("Default", (sanitizedBuilder.Length - 1).ToString());
 
             DescriptionSanitized = sanitizedBuilder.ToString();
+        }
+
+        private void AddCommandData(string name, string value)
+        {
+            Debug.Log($"Added CommandData: [{name},{value}]");
+            
+            CommandDatas.Add(new CommandData(name, value));
         }
         
         private string GetMarkupStripped(string markup)
@@ -122,7 +123,7 @@ namespace Dialogue
         private string GetMarkupValue(string markup)
         {
             if (!markup.Contains('='))
-                return null;
+                return "";
             
             int indexAfterEquals = markup.IndexOf('=') + 1;
             int length = markup.Length - 1 - indexAfterEquals;  

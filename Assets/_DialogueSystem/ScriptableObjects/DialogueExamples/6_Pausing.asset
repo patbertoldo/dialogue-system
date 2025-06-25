@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 6_Pausing
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Now we're getting a bit more complicated, <Wait_Long><i>Henry.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 41
+    - Name: Wait_Long
+      Value: 
+    - Name: Default
+      Value: 50
+    DescriptionSanitized: Now we're getting a bit more complicated, <i>Henry.
+  - Alignment: 1
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
+    Description: Why I have no idea what you <Wait_Long><i>mean</i><Wait_Short> by
+      that.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 27
+    - Name: Wait_Long
+      Value: 
+    - Name: Wait_Short
+      Value: 
+    - Name: Default
+      Value: 47
+    DescriptionSanitized: Why I have no idea what you <i>mean</i> by that.
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Oh I think you do with all these... <Wait_Long>delays!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 35
+    - Name: Wait_Long
+      Value: 
+    - Name: Default
+      Value: 42
+    DescriptionSanitized: Oh I think you do with all these... delays!
+  - Alignment: 1
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 4da51fe1357d4f348a04c2092a92476f, type: 2}
+    Description: '*finger guns*'
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 12
+    DescriptionSanitized: '*finger guns*'

@@ -112,8 +112,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 88}
-  m_SizeDelta: {x: 300, y: 480}
+  m_AnchoredPosition: {x: 100, y: 40}
+  m_SizeDelta: {x: 220, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3655062165936176472
 CanvasRenderer:
@@ -279,8 +279,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: 88}
-  m_SizeDelta: {x: 300, y: 480}
+  m_AnchoredPosition: {x: -100, y: 40}
+  m_SizeDelta: {x: 220, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6498576168912369155
 CanvasRenderer:
@@ -518,7 +518,6 @@ MonoBehaviour:
   layoutLeft: {fileID: 408012813591737395}
   layoutRight: {fileID: 7237992070622341872}
   canvasGroup: {fileID: 4781885939183509500}
-  nameText: {fileID: 0}
   audioSource: {fileID: -7429185516449860588}
   completedGO: {fileID: 4668956783997690303}
 --- !u!82 &-7429185516449860588
@@ -532,6 +531,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -726,8 +726,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: 0}
-  m_SizeDelta: {x: -300, y: 305}
+  m_AnchoredPosition: {x: -110, y: 0}
+  m_SizeDelta: {x: -220, y: 305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6347705807810860406
 CanvasRenderer:
@@ -800,15 +800,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -860,8 +862,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 0}
-  m_SizeDelta: {x: -300, y: 305}
+  m_AnchoredPosition: {x: 11, y: 0}
+  m_SizeDelta: {x: -22, y: 305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6123259488205837169
 CanvasRenderer:
@@ -934,15 +936,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0

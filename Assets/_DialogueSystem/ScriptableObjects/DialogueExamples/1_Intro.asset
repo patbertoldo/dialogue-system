@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5251a4d3e4d60d84f9fce5ad0a6e34be, type: 3}
+  m_Name: 1_Intro
+  m_EditorClassIdentifier: 
+  dialogueBlocks:
+  - Alignment: 0
+    Emotion: 1
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Hey!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 3
+    DescriptionSanitized: Hey!
+  - Alignment: 0
+    Emotion: 0
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: This is my first time writing a dialogue system from scratch.
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 60
+    DescriptionSanitized: This is my first time writing a dialogue system from scratch.
+  - Alignment: 0
+    Emotion: 4
+    DialogueCharacter: {fileID: 11400000, guid: 732633cda027468488b8f777e678e979, type: 2}
+    Description: Let's see if it's... up to scratch!
+    TextSpeed: 20
+    CommandDatas:
+    - Name: Default
+      Value: 34
+    DescriptionSanitized: Let's see if it's... up to scratch!

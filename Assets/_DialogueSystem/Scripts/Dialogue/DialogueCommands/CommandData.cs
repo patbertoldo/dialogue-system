@@ -18,5 +18,4 @@ namespace Dialogue
             Value = value;
         }
     }
-
 }
