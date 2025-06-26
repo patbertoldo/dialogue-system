@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 4504823007467619026}
   - component: {fileID: 4083695358043956515}
   - component: {fileID: 3405401847903790616}
+  - component: {fileID: 7240128339480165043}
   m_Layer: 5
   m_Name: TriggerPanel
   m_TagString: Untagged
@@ -190,10 +191,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01562d37d45439d47b735a7711da915d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 7240128339480165043}
   triggerDialoguePrefab: {fileID: 3718872116242123928, guid: 144c812de71e2a747b618878dd835385, type: 3}
   container: {fileID: 3988971510133133925}
-  triggerButton: {fileID: 0}
+  triggerButton: {fileID: 7353859135574782876, guid: 144c812de71e2a747b618878dd835385, type: 3}
+--- !u!225 &7240128339480165043
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655955257085418096}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8983827525399540482
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,15 +315,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0

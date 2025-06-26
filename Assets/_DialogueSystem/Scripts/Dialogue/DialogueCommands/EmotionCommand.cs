@@ -16,16 +16,16 @@ namespace Dialogue
         public Emotions Emotion;
         public bool WithSound = true;
 
-        public void Instantiate(DialogueBlock dialogueBlock, Image portrait, AudioSource audioSource)
+        public override void Initialise(DialogueBlock dialogueBlock, DialogueContainer dialogueContainer, string commandValue)
         {
             this.dialogueBlock = dialogueBlock;
-            this.portrait = portrait;
-            this.audioSource = audioSource;
+            portrait = dialogueContainer.Portait;
+            audioSource = dialogueContainer.AudioSource;
         }
 
-        public override async UniTask Execute()
+        public override async UniTask Execute(CancellationToken token)
         {
-            Debug.Log($"Play Emotion Command with sound: {WithSound}");
+            Debug.Log($"Play Emotion Command of {Emotion} with sound: {WithSound}");
             
             portrait.sprite = dialogueBlock.DialogueCharacter.GetPortrait(Emotion);
 
@@ -35,7 +35,7 @@ namespace Dialogue
                 audioSource.Play();
             }
 
-            await UniTask.WaitForEndOfFrame();
+            await UniTask.WaitForEndOfFrame(token);
         }
     }
 }

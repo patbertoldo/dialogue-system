@@ -16,14 +16,12 @@ namespace Dialogue
         public int Vibrato = 100;
         public float Duration = 1f;
 
-        public void Initialise(Transform transform)
+        public override void Initialise(DialogueBlock dialogueBlock, DialogueContainer dialogueContainer, string commandValue)
         {
-            this.transform = transform;
+            transform = dialogueContainer.transform;
         }
-        
-        public string Name => "shake";
 
-        public override async UniTask Execute()
+        public override async UniTask Execute(CancellationToken token)
         {
             Debug.Log("Play Shake Command");
             
@@ -31,7 +29,7 @@ namespace Dialogue
                 .OnComplete(() =>
                 {
                     Debug.Log("Shake Complete!");
-                });
+                }).ToUniTask(cancellationToken: token);
         }
     }
 }

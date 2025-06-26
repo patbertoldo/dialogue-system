@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -34,56 +35,18 @@ namespace Dialogue
         
         // Commands
         private DialogueCommandManager dialogueCommandManager;
-
-        private Dictionary<string, Type> kvpDialogueCommands =
-            new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
-            {
-                //{ DefaultCommand.TypeName,typeof(DefaultCommand) },
-                //{ ShowCommand.TypeName, typeof(ShowCommand) },
-                //{ HideCommand.TypeName, typeof(HideCommand) },
-                // { "playText", typeof(DefaultCommand) },
-                // { "playText", typeof(DefaultCommand) },
-                // { "playText", typeof(DefaultCommand) },
-                // { "playText", typeof(DefaultCommand) },
-            };
-        // private Dictionary<string, IDialogueCommand> kvpDialogueCommands = new Dictionary<string, IDialogueCommand>(StringComparer.OrdinalIgnoreCase)
-        // {
-        //     { "playText", }
-        // }
         // Where the outer list represents individual DialogueBlocks, the inner list is the commands for that block.
         private List<List<DialogueCommand>> dialogueBlockCommandLists = new ();
         
         // Tasks
         private AsyncOperationHandle<DialogueScriptableObject> currentDialogueHandle;
-        private CancellationTokenSource animationCancellation;
+        private CancellationTokenSource tokenSource;
         
         // Text
         private StringBuilder animatingBuilder;
         private StringBuilder markupBuilder;
         private int textSpeed;
         private bool skip;
-        
-        // Custom Markup
-        private const string markupShow = "show";
-        private const string markupHide = "hide";
-        private const string markupShake = "shake";
-        private const string markupWait = "wait";
-        private const string markupSpeed = "speed";
-        private const string markupEmotion = "emotion";
-
-        // TODO: Convert this to a globals list that's generated from a scriptable
-        public static List<string> GetCustomMarkupNames()
-        {
-            return new List<string>()
-            {
-                markupShow,
-                markupHide,
-                markupShake,
-                markupWait,
-                markupSpeed,
-                markupEmotion
-            };
-        }
         
         public DialogueManager(DialoguePanel dialoguePanel, DialogueCommandDatabase dialogueCommandDatabase)
         {
@@ -109,7 +72,7 @@ namespace Dialogue
         
         public void LoadDialogue(DialogueScriptableObjectAssetReference dialogueAddressable)
         {
-            LoadDialogueAsync(dialogueAddressable);
+            LoadDialogueAsync(dialogueAddressable).Forget();
         }
 
         private async UniTask LoadDialogueAsync(DialogueScriptableObjectAssetReference dialogueAddressable)
@@ -121,20 +84,16 @@ namespace Dialogue
             // Load Commands
             dialogueBlockCommandLists.Clear();
 
-            foreach (var db in currentDialogue.DialogueBlocks)
+            foreach (var dialogueBlock in currentDialogue.DialogueBlocks)
             {
-                var dialogueContainer = dialoguePanel.GetDialogueContainer(DialogueContainerState.OFF);
+                List<DialogueCommand> dialogueCommands = new();
                 
-                //List<IDialogueCommand> dbCommands = new();
-
-                // var newCommandType = kvpDialogueCommands["playText"];
-                // var newCommand = new newCommandType()
+                foreach (var commandData in dialogueBlock.CommandDatas)
+                {
+                    dialogueCommands.Add(dialogueCommandDatabase.GetCommandInstanceOfName(commandData.Name));
+                }
                 
-                //dbCommands.Add(new ShowCommand(dialogueContainer));
-                //dbCommands.Add(new DefaultCommand(dialogueContainer, 0, 3, 1f));
-                //dbCommands.Add(new HideCommand(dialogueContainer));
-                
-                //dialogueBlockCommandLists.Add(dbCommands);
+                dialogueBlockCommandLists.Add(dialogueCommands);
             }
             
             // Show Dialogue Panel
@@ -153,7 +112,7 @@ namespace Dialogue
                 case DialogueState.PLAYING:
                 {
                     skip = true;
-                    animationCancellation.Cancel();
+                    tokenSource.Cancel();
                     break;
                 }
                 case DialogueState.SKIPPED:              
@@ -169,18 +128,17 @@ namespace Dialogue
         {
             var dialogueBlock = currentDialogue.DialogueBlocks[currentIndex];
 
-            
-            foreach (var dbCommands in dialogueBlockCommandLists[currentIndex])
-            {
-                await dbCommands.Execute();
-            }
-
             currentState = DialogueState.PLAYING;
             textSpeed = dialogueBlock.TextSpeed;
             skip = false;
             // Each new dialogue needs a new cancellation token. It doesn't seem like tokens that have been
             // cancelled can be recycled.
-            animationCancellation = new CancellationTokenSource();
+            tokenSource = new CancellationTokenSource();
+            
+            foreach (var dbCommands in dialogueBlockCommandLists[currentIndex])
+            {
+                await dbCommands.Execute(tokenSource.Token);
+            }
             
             //dialogueCommandManager.BuildCommands(dialogueBlock.Description);
 
@@ -205,7 +163,7 @@ namespace Dialogue
 
         private void FinishDialogue()
         {
-            animationCancellation.Dispose();
+            tokenSource.Dispose();
             
             currentIndex++;
 
@@ -230,131 +188,6 @@ namespace Dialogue
         
         #region Task Handling
 
-        private async UniTask BuildDialogueText(DialogueBlock dialogueBlock, bool isSameCharacter)
-        {
-            animatingBuilder.Clear();
-            markupBuilder.Clear();
-
-            bool encounteredMarkup = false;
-
-            var name = dialogueBlock.DialogueCharacter.Name;
-            var nameColor = dialogueBlock.DialogueCharacter.NameColor;
-            
-            // When it's a new dialogue character, add their name to the start of the text. Add bold and color.
-            if (!isSameCharacter)
-                animatingBuilder.Append($"<b><color={nameColor}>{name}:</color></b> ");
-            
-            foreach (var character in dialogueBlock.Description.ToCharArray())
-            {
-                if (character == '<')
-                {
-                    encounteredMarkup = true;
-                    
-                    animatingBuilder.Append(character);
-                    markupBuilder.Append(character);
-                    continue;
-                }
-                
-                if (encounteredMarkup)
-                {
-                    animatingBuilder.Append(character);
-                    markupBuilder.Append(character);
-
-                    if (character == '>')
-                    {
-                        encounteredMarkup = false;
-
-                        var markup = markupBuilder.ToString();
-                        var markupStripped = GetMarkupStripped(markup);
-
-                        UniTask<bool> customMarkupTask = TryUniTask(CustomMarkupEffects(markup, markupStripped));
-                        await customMarkupTask;
-                        
-                        // Only remove custom markup, leave Text Mesh Pro markup.
-                        bool isCustomMarkup = customMarkupTask.GetAwaiter().GetResult();
-                        if (isCustomMarkup)
-                            animatingBuilder.Remove(animatingBuilder.Length - markup.Length, markup.Length);
-                                
-                        markupBuilder.Clear();
-                    }
-                    continue;
-                }
-
-                if (!skip)
-                {
-                    await TryUniTask(UniTask.Delay(textSpeed, cancellationToken: animationCancellation.Token));
-                }
-
-                animatingBuilder.Append(character);
-                dialoguePanel.SetDialogueTextOnActiveDialogue(animatingBuilder.ToString());
-            }
-        }
-
-        private string GetMarkupStripped(string markup)
-        {
-            string strippedMarkup = markup.Contains('=')
-                ? markup.Substring(1, markup.IndexOf('=') - 1)
-                : markup.Substring(1, markup.IndexOf('>') - 1);
-            return strippedMarkup;
-        }
-
-        private T GetMarkupValue<T>(string markup)
-        {
-            int indexAfterEquals = markup.IndexOf('=') + 1;
-            int length = markup.Length - 1 - indexAfterEquals;  
-            string result = markup.Substring(indexAfterEquals, length);
-            return (T)Convert.ChangeType(result, typeof(T));
-        }
-
-        private async UniTask<bool> CustomMarkupEffects(string markup, string markupStripped)
-        {
-            switch (markupStripped)
-            {
-                case markupShow:
-                {
-                    dialoguePanel.ShowEffectOnActiveDialogue();
-                    break;
-                }
-                case markupHide:
-                {
-                    dialoguePanel.HideEffectOnActiveDialogue();
-                    break;
-                }
-                case markupShake:
-                {
-                    dialoguePanel.ShakeEffectOnActiveDialogue();
-                    break;
-                }
-                case markupWait:
-                {
-                    int milliSeconds = (int)(GetMarkupValue<float>(markup) * 1000);
-                            
-                    if (!skip)
-                    {
-                        await TryUniTask(UniTask.Delay(milliSeconds, cancellationToken: animationCancellation.Token));
-                    }
-                    break;
-                }
-                case markupSpeed:
-                {
-                    textSpeed = GetMarkupValue<int>(markup);
-                    break;
-                }
-                case markupEmotion:
-                {
-                    Emotions emotion = Enum.Parse<Emotions>(GetMarkupValue<string>(markup).ToUpper());
-                    dialoguePanel.EmotionEffectOnActiveDialogue(currentDialogue.DialogueBlocks[currentIndex], emotion);
-                    break;
-                }
-                default:
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Try a UniTask only when we want it to be cancellable.
         /// </summary>
@@ -366,6 +199,7 @@ namespace Dialogue
             }
             catch (Exception e)
             {
+                Debug.Log("Skipped");
                 // Ignore, cancellations are expected when the player skips.
             }
         }

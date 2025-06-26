@@ -14,16 +14,16 @@ namespace Dialogue
         private const float fadeOut = 0f;
         public float Duration = 0.25f;
 
-        public void Initialise(CanvasGroup canvasGroup)
+        public override void Initialise(DialogueBlock dialogueBlock, DialogueContainer dialogueContainer, string commandValue)
         {
-            this.canvasGroup = canvasGroup;
+            canvasGroup = dialogueContainer.CanvasGroup;
         }
 
-        public override async UniTask Execute()
+        public override async UniTask Execute(CancellationToken token)
         {
             Debug.Log($"Play Hide Command for {Duration} seconds.");
             
-            await canvasGroup.DOFade(fadeOut, Duration);
+            await canvasGroup.DOFade(fadeOut, Duration).ToUniTask(cancellationToken: token);
         }
     }
 }

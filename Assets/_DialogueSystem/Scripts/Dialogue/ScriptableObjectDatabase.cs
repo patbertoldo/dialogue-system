@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
@@ -10,16 +11,9 @@ namespace Dialogue
     {
         public TAddressable[] AddressableDatabase;
         
-        public Dictionary<System.Type, TScriptable> LoadedScriptableObjects = new();
+        protected Dictionary<string, TScriptable> LoadedScriptableObjects = new();
 
-        public async UniTask LoadAsync()
-        {
-            foreach (var addressable in AddressableDatabase)
-            {
-                var handler = await Addressables.LoadAssetAsync<TScriptable>(addressable);
-                LoadedScriptableObjects.Add(handler.GetType(), handler);
-            }
-        }
+        public abstract UniTask LoadAsync();
 
         public abstract bool HasAddressableOfName(string name);
     }

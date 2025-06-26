@@ -14,19 +14,19 @@ namespace Dialogue
         private const float fadeIn = 1f;
         public float Duration = 0.25f;
 
-        public void Initialise(DialogueContainer dialogueContainer)
+        public override void Initialise(DialogueBlock dialogueBlock, DialogueContainer dialogueContainer, string commandValue)
         {
             audioSource = dialogueContainer.AudioSource;
             canvasGroup = dialogueContainer.CanvasGroup;
         }
 
-        public override async UniTask Execute()
+        public override async UniTask Execute(CancellationToken token)
         {
             Debug.Log($"Play Show Command for {Duration} seconds.");
             
             audioSource.Play();
             
-            await canvasGroup.DOFade(fadeIn, Duration);
+            await canvasGroup.DOFade(fadeIn, Duration).ToUniTask(cancellationToken: token);
         }
     }
 }

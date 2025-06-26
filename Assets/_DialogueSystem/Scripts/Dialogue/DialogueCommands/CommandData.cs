@@ -9,7 +9,6 @@ namespace Dialogue
     public struct CommandData
     {
         public string Name;
-        [CanBeNull]
         public string Value;
 
         public CommandData(string name, string value)

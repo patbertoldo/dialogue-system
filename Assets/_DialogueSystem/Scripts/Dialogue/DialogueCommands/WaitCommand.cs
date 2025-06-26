@@ -11,11 +11,15 @@ namespace Dialogue
     {
         public float Duration;
 
-        public override async UniTask Execute()
+        public override void Initialise(DialogueBlock dialogueBlock, DialogueContainer dialogueContainer, string commandValue)
+        {
+        }
+
+        public override async UniTask Execute(CancellationToken token)
         {
             Debug.Log($"Play Wait Command for {Duration} seconds.");
             
-            await UniTask.WaitForSeconds(Duration);
+            await UniTask.WaitForSeconds(Duration, cancellationToken: token);
         }
     }
 }
